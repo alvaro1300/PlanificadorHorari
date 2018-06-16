@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 
 public class TempsActivity extends AppCompatActivity {
 
+    public static String ERROR =" -E- ";
+
     public static final int HORES = 0;
     public static final int MINUTS = 1;
     public static final int UNITAT = 1;
@@ -124,6 +126,8 @@ public class TempsActivity extends AppCompatActivity {
     }
 
     public void ompleHoraMinuts (String valor){
+
+
         String hora;
         String min ;
         tvDosPunts.setText(".");

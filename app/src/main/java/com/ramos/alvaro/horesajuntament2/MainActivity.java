@@ -24,10 +24,12 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 
     public static final String NOVALUE = "-";
+    public static String ERROR =" -E- ";
     public static final String TIME_VALUE_0 = "0.00";
     public static final String STATE_ID_VIEW = "idViewSelec";
     public static final String LIMIT_HORES_SETMANA = "37.30";
     public static final String TEMPS_EFECTIU_DIA_FESTIU = "7.30";
+    public static final String TEMPS_EFECTIU_DIA_DEFECTE = "7.30";
     public static final String HORA_ENT_DEFECTE = "08:00";
     public static final String HORA_SORT_DEFECTE = "15:30";
     public static String HOUR_FORMAT = "HH:mm";
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public static int SORTIDA = 1;
     public static int TEMPS_NOEFEC = 2;
     public static int TOTAL_DIA = 3;
-    public static String ERROR =" -E- ";
+
 
     public static String ARXIU_DADES_MODEL = "dadesModel";
     public static String ARXIU_DADES1 = "dades";
@@ -654,6 +656,16 @@ public class MainActivity extends AppCompatActivity {
         if(!checked){
 
             id = v.getId();
+            if(tvSelString.equals(ERROR)){
+
+                tvSel.setText(TEMPS_EFECTIU_DIA_DEFECTE);
+                listaSetmana.get(diaSetmana).get(ENTRADA).setText(NOVALUE);
+                listaSetmana.get(diaSetmana).get(SORTIDA).setText(NOVALUE);
+                listaSetmana.get(diaSetmana).get(TEMPS_NOEFEC).setText(NOVALUE);
+                calcularTot();
+                totalSemana = tvResult.getText().toString();
+                tvSelString = tvSel.getText().toString();
+            }
 
             Intent i = new Intent(this, TempsActivity.class);
             i.putExtra("tempsStringOriginal", tvSelString);
