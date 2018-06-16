@@ -820,12 +820,12 @@ public class MainActivity extends AppCompatActivity {
         verFinde = prefe.getBoolean("verFinde",false);
 
         cbDl.setChecked(prefe.getBoolean("checkBoxDl", false));
-        cbDl.setChecked(prefe.getBoolean("checkBoxDm", false));
-        cbDl.setChecked(prefe.getBoolean("checkBoxDc", false));
-        cbDl.setChecked(prefe.getBoolean("checkBoxDj", false));
-        cbDl.setChecked(prefe.getBoolean("checkBoxDv", false));
-        cbDl.setChecked(prefe.getBoolean("checkBoxDs", false));
-        cbDl.setChecked(prefe.getBoolean("checkBoxDg", false));
+        cbDm.setChecked(prefe.getBoolean("checkBoxDm", false));
+        cbDc.setChecked(prefe.getBoolean("checkBoxDc", false));
+        cbDj.setChecked(prefe.getBoolean("checkBoxDj", false));
+        cbDv.setChecked(prefe.getBoolean("checkBoxDv", false));
+        cbDs.setChecked(prefe.getBoolean("checkBoxDs", false));
+        cbDg.setChecked(prefe.getBoolean("checkBoxDg", false));
 
 
 
@@ -899,7 +899,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        editor.commit();
+        editor.apply();
 
     }
 
@@ -916,7 +916,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(dia[1],diaSelecionat.get(SORTIDA).getText().toString());
         editor.putString(dia[2],diaSelecionat.get(TEMPS_NOEFEC).getText().toString());
 
-        editor.commit();
+        editor.apply();
 
 
 
