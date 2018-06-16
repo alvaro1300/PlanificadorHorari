@@ -600,12 +600,15 @@ public class MainActivity extends AppCompatActivity {
         TextView tvSel = (TextView)v;
         String tvSelString = tvSel.getText().toString();
 
+        String totalSemana = tvResult.getText().toString();
+
         if(!checked){
             if(!tvSelString.equals(NOVALUE)){
                 id = v.getId();
 
                 Intent i = new Intent(this, TempsActivity.class);
                 i.putExtra("tempsStringOriginal", tvSelString);
+                i.putExtra("totalSemanaStringOriginal", totalSemana);
 
                 startActivityForResult(i,2);
 
@@ -624,6 +627,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent i = new Intent(this, TempsActivity.class);
                     i.putExtra("tempsStringOriginal", TIME_VALUE_0);
+                    i.putExtra("totalSemanaStringOriginal", totalSemana);
                     startActivityForResult(i,2);
                 }
 
@@ -645,12 +649,15 @@ public class MainActivity extends AppCompatActivity {
         TextView tvSel = (TextView)v;
         String tvSelString = tvSel.getText().toString();
 
+        String totalSemana = tvResult.getText().toString();
+
         if(!checked){
 
             id = v.getId();
 
             Intent i = new Intent(this, TempsActivity.class);
             i.putExtra("tempsStringOriginal", tvSelString);
+            i.putExtra("totalSemanaStringOriginal", totalSemana);
 
             startActivityForResult(i,3);
 

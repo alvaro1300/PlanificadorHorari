@@ -97,8 +97,11 @@ public class TempsActivity extends AppCompatActivity {
 
         Bundle bundle= getIntent().getExtras();
         horaStringOriginal = bundle.getString("tempsStringOriginal");
+        totalSemanaOriginal = bundle.getString("totalSemanaStringOriginal");
+
         ompleHoraMinuts(horaStringOriginal);
         ompleTotalSetmana(totalSemanaOriginal);
+
         horaStringModificat = horaStringOriginal;
         totalSemanaModificat = totalSemanaOriginal;
 
