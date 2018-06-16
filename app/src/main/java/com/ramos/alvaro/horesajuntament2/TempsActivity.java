@@ -112,6 +112,14 @@ public class TempsActivity extends AppCompatActivity {
 
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void cancel (View v){
+
+        Intent intent=new Intent();
+
+        setResult(RESULT_CANCELED, intent);
+        finish();
 
 
 
@@ -159,13 +167,7 @@ public class TempsActivity extends AppCompatActivity {
 
 
 
-    public void cancel (View v){
-        String num1= "1";
 
-
-
-
-    }
 
 
     public void button1 (View v){

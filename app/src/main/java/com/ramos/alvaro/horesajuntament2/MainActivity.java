@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     String hora;
     String tempsNoEfect;
+    String tempsEfect;
     int id;
     TextView itemSel;
     int limitDies;
@@ -172,12 +173,6 @@ public class MainActivity extends AppCompatActivity {
         cambiarColores ();
 
 
-        //PROVA
-        tvDlEnt.setText(NOVALUE);
-        tvDlSort.setText(NOVALUE);
-
-
-
     }
 
     public void calcularTot(){
@@ -192,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Recorremos la listaSetmana que contiene los 7 dias de la semana con 4 valores por cada dia
         //Se limita el recorrido dependiendo si se esta mostrando el finde o no.
-        for (int i=0;i<limitDies;i++){
-            List<TextView> listaD = listaSetmana.get(i);
+        for (int diaSetmana=0; diaSetmana<limitDies; diaSetmana++){
+            List<TextView> listaD = listaSetmana.get(diaSetmana);
 
             //TextView resDia = listaResDia.get(3);
             TextView resDia = listaD.get(TOTAL_DIA); //Obtenemos el TextView del resultado del dia
@@ -203,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             String noEfect = listaD.get(TEMPS_NOEFEC).getText().toString();
             //String efect = listaD.get(3).getText().toString();
 
-            String resultat = calcularDia(ent, sort, noEfect);
+            String resultat = calcularDia(ent, sort, noEfect, diaSetmana);
             resDia.setText(resultat);
         }
 
@@ -225,63 +220,69 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public String calcularDia (String ent, String sort, String noEfect){
+    public String calcularDia (String ent, String sort, String noEfect, int diaSetmana){
         String ret=ERROR;
+
+        //Obtenemos el objeto CheckBox en funcion del dia de la semana
+        CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
+        boolean checked = false;
+        checked = checkBoxDelDia.isChecked();
+
+
 
         //Cambiamos el "-" que muestra el textview noEfect por el valor "0.00" en caso que sea necesario
         if(noEfect.equals(NOVALUE)){
            noEfect = TIME_VALUE_0;
         }
 
-        if(ent.equals(NOVALUE) && sort.equals(NOVALUE) /* || noEfect.equals(NOVALUE)*/){
+        if(checked){
 
             ret=TEMPS_EFECTIU_DIA_FESTIU;
 
         }else {
 
-            Calendar calEnt= Operacions.stringToCalendar(ent, HOUR_FORMAT);
-            Calendar calSort= Operacions.stringToCalendar(sort, HOUR_FORMAT);
-            //Calendar calNoEfect= stringToCalendar(noEfect, TIME_FORMAT);
+            if (ent.equals(NOVALUE)|| sort.equals(NOVALUE)){
 
-            int minEnt = calEnt.get(Calendar.MINUTE);
-            int horaEnt = calEnt.get(Calendar.HOUR_OF_DAY);
+                ret=listaSetmana.get(diaSetmana).get(TOTAL_DIA).toString();
 
-        /*
-        int minNoEfect = calNoEfect.get(Calendar.MINUTE);
-        int horaNoEfect = calNoEfect.get(Calendar.HOUR_OF_DAY);
-*/
+            }else{
+                Calendar calEnt= Operacions.stringToCalendar(ent, HOUR_FORMAT);
+                Calendar calSort= Operacions.stringToCalendar(sort, HOUR_FORMAT);
+                //Calendar calNoEfect= stringToCalendar(noEfect, TIME_FORMAT);
 
-            String[] arrayNoEfec = noEfect.split(Pattern.quote("."));
-            int minNoEfect = Integer.parseInt(arrayNoEfec[1]);
-            int horaNoEfect = Integer.parseInt(arrayNoEfec[0]);
+                int minEnt = calEnt.get(Calendar.MINUTE);
+                int horaEnt = calEnt.get(Calendar.HOUR_OF_DAY);
 
-            int comparacio = calSort.compareTo(calEnt);
+                String[] arrayNoEfec = noEfect.split(Pattern.quote("."));
+                int minNoEfect = Integer.parseInt(arrayNoEfec[1]);
+                int horaNoEfect = Integer.parseInt(arrayNoEfec[0]);
 
-            if (comparacio >= 0) {
-                calSort.add(Calendar.MINUTE, -minEnt);
-                calSort.add(Calendar.HOUR_OF_DAY, -horaEnt);
+                int comparacio = calSort.compareTo(calEnt);
 
-                calSort.add(Calendar.MINUTE, -minNoEfect);
-                calSort.add(Calendar.HOUR_OF_DAY, -horaNoEfect);
+                if (comparacio >= 0) {
+                    calSort.add(Calendar.MINUTE, -minEnt);
+                    calSort.add(Calendar.HOUR_OF_DAY, -horaEnt);
 
-                ret = Operacions.calendarToString(calSort, TIME_FORMAT);
+                    calSort.add(Calendar.MINUTE, -minNoEfect);
+                    calSort.add(Calendar.HOUR_OF_DAY, -horaNoEfect);
 
-                //System.out.println("La hora resultat es: " + res);
+                    ret = Operacions.calendarToString(calSort, TIME_FORMAT);
+
+                    //System.out.println("La hora resultat es: " + res);
 
 
-            } else {
-                //System.out.println("La hora sortida no pot ser mes petita que hora entrada");
+                } else {
+                    //System.out.println("La hora sortida no pot ser mes petita que hora entrada");
 
-                Toast.makeText(this,"La hora de salida no se puede producir antes que la hora de entrada",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"La hora de salida no se puede producir antes que la hora de entrada",Toast.LENGTH_LONG).show();
+                }
             }
-
-
-
         }
-
 
         return ret;
     }
+
+
 
     public String calcularTotalSetmana(){
 
@@ -515,6 +516,22 @@ public class MainActivity extends AppCompatActivity {
         return diaSetmana;
     }
 
+    public int trobarDiaSetPerTextViewClicat (int id){
+        int diaSetmana=0;
+        for (int i=0; i<limitDies;i++){
+            List<TextView> listaValoresDia = listaSetmana.get(i);
+            for (TextView itemSel: listaValoresDia){
+                if(id==itemSel.getId()){
+                    diaSetmana = i;
+                    i = limitDies;
+                    break;
+                }
+            }
+        }
+
+        return diaSetmana;
+    }
+
 
 
     /* ----------------------------BOTONES-----------------------------------------*/
@@ -527,7 +544,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Obtenemos el objeto CheckBox en funcion del dia de la semana
         CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
-        boolean checked = false;
+        boolean checked;
         checked = checkBoxDelDia.isChecked();
 
 
@@ -569,7 +586,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Obtenemos el objeto CheckBox en funcion del dia de la semana
         CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
-        boolean checked = false;
+        boolean checked;
         checked = checkBoxDelDia.isChecked();
 
         TextView tvSel = (TextView)v;
@@ -583,15 +600,18 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("tempsStringOriginal", tvSelString);
 
                 startActivityForResult(i,2);
+
             } else{
                 id = v.getId();
 
                 List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
                 String stringEnt = listaValorsDia.get(ENTRADA).getText().toString();
                 String stringSort = listaValorsDia.get(SORTIDA).getText().toString();
+
                 if(stringEnt.equals(NOVALUE) || stringSort.equals(NOVALUE)){
                     listaValorsDia.get(ENTRADA).setText(HORA_ENT_DEFECTE);
                     listaValorsDia.get(SORTIDA).setText(HORA_SORT_DEFECTE);
+
                 } else {
                     Intent i = new Intent(this, TempsActivity.class);
                     i.putExtra("tempsStringOriginal", TIME_VALUE_0);
@@ -601,6 +621,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+    public void bAccionEfect(View v){
+
+        //Obtenemos el dia de la semana para poder encontrar su CheckBox correspondiente
+        int diaSetmana = trobarDiaSetPerTextViewClicat(v);
+
+        //Obtenemos el objeto CheckBox en funcion del dia de la semana
+        CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
+        boolean checked;
+        checked = checkBoxDelDia.isChecked();
+
+        TextView tvSel = (TextView)v;
+        String tvSelString = tvSel.getText().toString();
+
+        if(!checked){
+
+            id = v.getId();
+
+            Intent i = new Intent(this, TempsActivity.class);
+            i.putExtra("tempsStringOriginal", tvSelString);
+
+            startActivityForResult(i,3);
+
+        }
+    }
+
+
+
 
     public void bAccionOcultarFinde(View v){
         if (trDs.getVisibility()==View.GONE){
@@ -687,6 +736,7 @@ public class MainActivity extends AppCompatActivity {
                 fillTextValues(hora,itemSel);
 
             }
+
         } else if (requestCode == 2) {
             if (resultCode == RESULT_OK) {
 
@@ -699,10 +749,26 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     fillTextValues(tempsNoEfect, itemSel);
                 }
+            }
+
+        } else if (requestCode == 3) {
+            if (resultCode == RESULT_OK) {
+
+                tempsEfect = data.getStringExtra("temps");
+                fillTextValues(tempsEfect, itemSel);
+                int diaSetmana = trobarDiaSetPerTextViewClicat(itemSel);
+                listaSetmana.get(diaSetmana).get(ENTRADA).setText(NOVALUE);
+                listaSetmana.get(diaSetmana).get(SORTIDA).setText(NOVALUE);
+                listaSetmana.get(diaSetmana).get(TEMPS_NOEFEC).setText(NOVALUE);
+
+
+            } else if (resultCode == RESULT_CANCELED){
 
 
             }
+
         }
+
         calcularTot();
     }
 
