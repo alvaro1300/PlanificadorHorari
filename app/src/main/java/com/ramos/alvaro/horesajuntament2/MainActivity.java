@@ -123,6 +123,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+
+        super.onSaveInstanceState(savedInstanceState);
+        //Almacenar la id del view selecionado cuando se toca sobre un numero de la pantalla
+        //para editarlo
+        savedInstanceState.putInt(STATE_ID_VIEW, id);
+
+
+
+
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -463,17 +477,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState){
-        //Almacenar la id del view selecionado cuando se toca sobre un numero de la pantalla
-        //para editarlo
-        savedInstanceState.putInt(STATE_ID_VIEW, id);
 
-
-
-        super.onSaveInstanceState(savedInstanceState);
-
-    }
 
     /**
      * Compara el id del View que se guardó antes de cambiar de pantalla con la lista de TextView
