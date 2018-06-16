@@ -820,7 +820,13 @@ public class MainActivity extends AppCompatActivity {
         verFinde = prefe.getBoolean("verFinde",false);
 
         cbDl.setChecked(prefe.getBoolean("checkBoxDl", false));
-        //CONTINUAR AQUI
+        cbDl.setChecked(prefe.getBoolean("checkBoxDm", false));
+        cbDl.setChecked(prefe.getBoolean("checkBoxDc", false));
+        cbDl.setChecked(prefe.getBoolean("checkBoxDj", false));
+        cbDl.setChecked(prefe.getBoolean("checkBoxDv", false));
+        cbDl.setChecked(prefe.getBoolean("checkBoxDs", false));
+        cbDl.setChecked(prefe.getBoolean("checkBoxDg", false));
+
 
 
         //calcularTot();
@@ -884,7 +890,12 @@ public class MainActivity extends AppCompatActivity {
 
         editor.putBoolean("checkBoxDl", cbDl.isChecked());
         editor.putBoolean("checkBoxDm", cbDm.isChecked());
-        //CONTINUAR AQUI
+        editor.putBoolean("checkBoxDc", cbDc.isChecked());
+        editor.putBoolean("checkBoxDj", cbDj.isChecked());
+        editor.putBoolean("checkBoxDv", cbDv.isChecked());
+        editor.putBoolean("checkBoxDs", cbDs.isChecked());
+        editor.putBoolean("checkBoxDg", cbDg.isChecked());
+
 
 
 
