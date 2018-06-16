@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String STATE_ID_VIEW = "idViewSelec";
     public static final String LIMIT_HORES_SETMANA = "37.30";
     public static final String TEMPS_EFECTIU_DIA_FESTIU = "7.30";
+    public static final String HORA_ENT_DEFECTE = "08:00";
+    public static final String HORA_SORT_DEFECTE = "15:30";
     public static String HOUR_FORMAT = "HH:mm";
     public static String TIME_FORMAT = "H.mm";
     public static String TIME_FORMAT2 = "HH.mm";
@@ -168,6 +170,11 @@ public class MainActivity extends AppCompatActivity {
         visivilidadFinde();
         calcularTot();
         cambiarColores ();
+
+
+        //PROVA
+        tvDlEnt.setText(NOVALUE);
+        tvDlSort.setText(NOVALUE);
 
 
 
@@ -529,38 +536,70 @@ public class MainActivity extends AppCompatActivity {
         String tvSelString = tvSel.getText().toString();
         String totalSemana = tvResult.getText().toString();
 
-        if(!tvSelString.equals(NOVALUE)){
+        if (!checked){
+            if(!tvSelString.equals(NOVALUE)){
 
-            id = v.getId();
+                id = v.getId(); //Guardamos la id del view clickado para que al volver a esta activity
+                //se sepa que boton lanzó el intent . Esto se harà gracias al onSaveInstanceState
+
+                Intent i = new Intent(this, HoresActivity.class);
+                i.putExtra("horaStringOriginal", tvSelString);
+                i.putExtra("totalSemanaStringOriginal", totalSemana);
+
+                startActivityForResult(i,1);
+            } else {
+                List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
+                listaValorsDia.get(ENTRADA).setText(HORA_ENT_DEFECTE);
+                listaValorsDia.get(SORTIDA).setText(HORA_SORT_DEFECTE);
+                listaValorsDia.get(TEMPS_NOEFEC).setText(NOVALUE);
 
 
-            Intent i = new Intent(this, HoresActivity.class);
-            i.putExtra("horaStringOriginal", tvSelString);
-            i.putExtra("totalSemanaStringOriginal", totalSemana);
+            }
 
-            startActivityForResult(i,1);
         }
+
+
 
     }
 
     public void bAccionNoEfect(View v){
+
+        //Obtenemos el dia de la semana para poder encontrar su CheckBox correspondiente
+        int diaSetmana = trobarDiaSetPerTextViewClicat(v);
+
+        //Obtenemos el objeto CheckBox en funcion del dia de la semana
+        CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
+        boolean checked = false;
+        checked = checkBoxDelDia.isChecked();
+
         TextView tvSel = (TextView)v;
         String tvSelString = tvSel.getText().toString();
-        if(!tvSelString.equals(NOVALUE)){
-            id = v.getId();
 
-            Intent i = new Intent(this, TempsActivity.class);
-            i.putExtra("tempsStringOriginal", tvSelString);
+        if(!checked){
+            if(!tvSelString.equals(NOVALUE)){
+                id = v.getId();
 
-            startActivityForResult(i,2);
-        } else{
-            id = v.getId();
-            Intent i = new Intent(this, TempsActivity.class);
-            i.putExtra("tempsStringOriginal", TIME_VALUE_0);
-            startActivityForResult(i,2);
+                Intent i = new Intent(this, TempsActivity.class);
+                i.putExtra("tempsStringOriginal", tvSelString);
 
+                startActivityForResult(i,2);
+            } else{
+                id = v.getId();
+
+                List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
+                String stringEnt = listaValorsDia.get(ENTRADA).getText().toString();
+                String stringSort = listaValorsDia.get(SORTIDA).getText().toString();
+                if(stringEnt.equals(NOVALUE) || stringSort.equals(NOVALUE)){
+                    listaValorsDia.get(ENTRADA).setText(HORA_ENT_DEFECTE);
+                    listaValorsDia.get(SORTIDA).setText(HORA_SORT_DEFECTE);
+                } else {
+                    Intent i = new Intent(this, TempsActivity.class);
+                    i.putExtra("tempsStringOriginal", TIME_VALUE_0);
+                    startActivityForResult(i,2);
+                }
+
+            }
         }
-
     }
 
     public void bAccionOcultarFinde(View v){
