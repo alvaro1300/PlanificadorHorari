@@ -116,8 +116,8 @@ public class HoresActivity extends AppCompatActivity {
             ompleHoraMinuts(horaStringOriginal);
             ompleTotalSetmana(totalSemanaOriginal);
 
-            //horaStringModificat = horaStringOriginal;
-            //totalSemanaModificat = totalSemanaOriginal;
+            horaStringModificat = horaStringOriginal;
+            totalSemanaModificat = totalSemanaOriginal;
        // }
 
         //horaStringModificat = horaStringOriginal;

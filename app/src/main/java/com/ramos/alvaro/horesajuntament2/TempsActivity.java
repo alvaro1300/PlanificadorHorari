@@ -23,10 +23,14 @@ public class TempsActivity extends AppCompatActivity {
     public static final int UNITAT = 1;
     public static final int DECIMAL = 0;
 
+    public static final String STATE_HORAMINUTS = "horaMinuts";
+    public static final String STATE_TEMPS_SETMANAL = "tempsSetmanal";
+
 
 
 
     private TextView tvHores, tvMinuts, tvDosPunts;
+    private TextView tvTotalSemana;
     private Button btCancel, btOk, bt1, bt2,bt3, bt4 ,bt5, bt6, bt7, bt8, bt9;
     private TextView tvFocus = tvHores;
     private List<TextView> itemTime = new ArrayList<TextView>();
@@ -38,9 +42,35 @@ public class TempsActivity extends AppCompatActivity {
     String valueMin;
     String value;
     int numero;
+
     String horaStringOriginal;
+    String horaStringModificat=null;
+    String totalSemanaOriginal;
+    String totalSemanaModificat=null;
 
 
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+
+        super.onSaveInstanceState(savedInstanceState);
+        //Almacenar los strings que hayamos introducido en pantalla para que al girar la vista se vuelvan a cargar
+        savedInstanceState.putString(STATE_HORAMINUTS, horaStringModificat);
+        savedInstanceState.putString(STATE_TEMPS_SETMANAL, totalSemanaModificat);
+
+
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle recuperaEstado){
+        super.onRestoreInstanceState(recuperaEstado);
+        horaStringModificat = recuperaEstado.getString(STATE_HORAMINUTS);
+        totalSemanaModificat = recuperaEstado.getString(STATE_TEMPS_SETMANAL);
+
+        ompleHoraMinuts(horaStringModificat);
+        //ompleTotalSetmana(totalSemanaModificat);
+    }
 
 
     @Override
@@ -51,6 +81,8 @@ public class TempsActivity extends AppCompatActivity {
         tvHores=(TextView)findViewById(R.id.tvHores);
         tvMinuts=(TextView)findViewById(R.id.tvMinuts);
         tvDosPunts=(TextView)findViewById(R.id.tvDosPunts);
+        tvTotalSemana=(TextView)findViewById(R.id.tvTotalSemana);
+
         btOk=(Button)findViewById(R.id.btOk);
         btCancel=(Button)findViewById(R.id.btCancel);
         bt1=(Button)findViewById(R.id.bt1);
@@ -65,7 +97,10 @@ public class TempsActivity extends AppCompatActivity {
 
         Bundle bundle= getIntent().getExtras();
         horaStringOriginal = bundle.getString("tempsStringOriginal");
-        ompleHoraMinuts ();
+        ompleHoraMinuts(horaStringOriginal);
+        ompleTotalSetmana(totalSemanaOriginal);
+        horaStringModificat = horaStringOriginal;
+        totalSemanaModificat = totalSemanaOriginal;
 
 /*
         posHores = true;
@@ -85,11 +120,11 @@ public class TempsActivity extends AppCompatActivity {
 
     }
 
-    public void ompleHoraMinuts (){
+    public void ompleHoraMinuts (String valor){
         String hora;
         String min ;
         tvDosPunts.setText(".");
-        String [] parts = horaStringOriginal.split(Pattern.quote("."));
+        String [] parts = valor.split(Pattern.quote("."));
         int i = parts.length;
 
         hora = parts[0];
@@ -99,6 +134,10 @@ public class TempsActivity extends AppCompatActivity {
         tvMinuts.setText(min);
 
 
+    }
+
+    public void ompleTotalSetmana(String valor){
+        tvTotalSemana.setText(valor);
     }
 
 
@@ -173,6 +212,7 @@ public class TempsActivity extends AppCompatActivity {
     public void button1 (View v){
         String num = "1";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
 
     }
 
@@ -180,46 +220,55 @@ public class TempsActivity extends AppCompatActivity {
     public void button2 (View v){
         String num = "2";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button3 (View v){
         String num = "3";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button4 (View v){
         String num = "4";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button5 (View v){
         String num = "5";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button6 (View v){
         String num = "6";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button7 (View v){
         String num = "7";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button8 (View v){
         String num = "8";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button9 (View v){
         String num = "9";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
     public void button0 (View v){
         String num = "0";
         accionButton(num);
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
     }
 
 
