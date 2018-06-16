@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
     String hora;
     String tempsNoEfect;
-    String tempsEfect;
+    String tempsEfect = "7.21";
     int id;
     TextView itemSel;
     int limitDies;
@@ -188,15 +188,15 @@ public class MainActivity extends AppCompatActivity {
         //Recorremos la listaSetmana que contiene los 7 dias de la semana con 4 valores por cada dia
         //Se limita el recorrido dependiendo si se esta mostrando el finde o no.
         for (int diaSetmana=0; diaSetmana<limitDies; diaSetmana++){
-            List<TextView> listaD = listaSetmana.get(diaSetmana);
+            List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
 
             //TextView resDia = listaResDia.get(3);
-            TextView resDia = listaD.get(TOTAL_DIA); //Obtenemos el TextView del resultado del dia
+            TextView resDia = listaValorsDia.get(TOTAL_DIA); //Obtenemos el TextView del resultado del dia
 
-            String ent = listaD.get(ENTRADA).getText().toString();
-            String sort = listaD.get(SORTIDA).getText().toString();
-            String noEfect = listaD.get(TEMPS_NOEFEC).getText().toString();
-            //String efect = listaD.get(3).getText().toString();
+            String ent = listaValorsDia.get(ENTRADA).getText().toString();
+            String sort = listaValorsDia.get(SORTIDA).getText().toString();
+            String noEfect = listaValorsDia.get(TEMPS_NOEFEC).getText().toString();
+            //String efect = listaValorsDia.get(3).getText().toString();
 
             String resultat = calcularDia(ent, sort, noEfect, diaSetmana);
             resDia.setText(resultat);
@@ -241,9 +241,12 @@ public class MainActivity extends AppCompatActivity {
 
         }else {
 
-            if (ent.equals(NOVALUE)|| sort.equals(NOVALUE)){
+            if (ent.equals(NOVALUE) || sort.equals(NOVALUE)){
 
-                ret=listaSetmana.get(diaSetmana).get(TOTAL_DIA).toString();
+
+
+                ret=listaSetmana.get(diaSetmana).get(TOTAL_DIA).getText().toString(); //Este valor es el que retorna el intent del activity que se
+                // abre para cambiar directamente el valor del temps Efectiu del Dia
 
             }else{
                 Calendar calEnt= Operacions.stringToCalendar(ent, HOUR_FORMAT);
@@ -569,6 +572,7 @@ public class MainActivity extends AppCompatActivity {
                 listaValorsDia.get(ENTRADA).setText(HORA_ENT_DEFECTE);
                 listaValorsDia.get(SORTIDA).setText(HORA_SORT_DEFECTE);
                 listaValorsDia.get(TEMPS_NOEFEC).setText(NOVALUE);
+                calcularTot();
 
 
             }
@@ -611,6 +615,7 @@ public class MainActivity extends AppCompatActivity {
                 if(stringEnt.equals(NOVALUE) || stringSort.equals(NOVALUE)){
                     listaValorsDia.get(ENTRADA).setText(HORA_ENT_DEFECTE);
                     listaValorsDia.get(SORTIDA).setText(HORA_SORT_DEFECTE);
+                    calcularTot();
 
                 } else {
                     Intent i = new Intent(this, TempsActivity.class);
@@ -939,30 +944,37 @@ public class MainActivity extends AppCompatActivity {
         tvDlEnt.setText(prefe.getString("DlEnt", "08:00"));
         tvDlSort.setText(prefe.getString("DlSort", "15:30"));
         tvDlNoEfec.setText(prefe.getString("DlNoEfec", "0.00"));
+        tvDlEfec.setText(prefe.getString("DlEfec", "7.30"));
 
         tvDmEnt.setText(prefe.getString("DmEnt", "08:00"));
         tvDmSort.setText(prefe.getString("DmSort", "15:30"));
         tvDmNoEfec.setText(prefe.getString("DmNoEfec", "0.30"));
+        tvDmEfec.setText(prefe.getString("DmEfec", "7.30"));
 
         tvDcEnt.setText(prefe.getString("DcEnt", "08:00"));
         tvDcSort.setText(prefe.getString("DcSort", "15:30"));
         tvDcNoEfec.setText(prefe.getString("DcNoEfec", "0.00"));
+        tvDcEfec.setText(prefe.getString("DcEfec", "7.30"));
 
         tvDjEnt.setText(prefe.getString("DjEnt", "08:00"));
         tvDjSort.setText(prefe.getString("DjSort", "15:30"));
         tvDjNoEfec.setText(prefe.getString("DjNoEfec", "0.30"));
+        tvDjEfec.setText(prefe.getString("DjEfec", "7.30"));
 
         tvDvEnt.setText(prefe.getString("DvEnt", "08:00"));
         tvDvSort.setText(prefe.getString("DvSort", "15:30"));
         tvDvNoEfec.setText(prefe.getString("DvNoEfec", "0.00"));
+        tvDvEfec.setText(prefe.getString("DvEfec", "7.30"));
 
         tvDsEnt.setText(prefe.getString("DsEnt", "08:00"));
         tvDsSort.setText(prefe.getString("DsSort", "15:30"));
         tvDsNoEfec.setText(prefe.getString("DsNoEfec", "0.00"));
+        tvDsEfec.setText(prefe.getString("DsEfec", "7.30"));
 
         tvDgEnt.setText(prefe.getString("DgEnt", "08:00"));
         tvDgSort.setText(prefe.getString("DgSort", "15:30"));
         tvDgNoEfec.setText(prefe.getString("DgNoEfec", "0.00"));
+        tvDgEfec.setText(prefe.getString("DgEfec", "7.30"));
 
         verFinde = prefe.getBoolean("verFinde",false);
 
@@ -1008,30 +1020,37 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("DlEnt",tvDlEnt.getText().toString());
         editor.putString("DlSort",tvDlSort.getText().toString());
         editor.putString("DlNoEfec",tvDlNoEfec.getText().toString());
+        editor.putString("DlEfec",tvDlEfec.getText().toString());
 
         editor.putString("DmEnt",tvDmEnt.getText().toString());
         editor.putString("DmSort",tvDmSort.getText().toString());
         editor.putString("DmNoEfec",tvDmNoEfec.getText().toString());
+        editor.putString("DmEfec",tvDmEfec.getText().toString());
 
         editor.putString("DcEnt",tvDcEnt.getText().toString());
         editor.putString("DcSort",tvDcSort.getText().toString());
         editor.putString("DcNoEfec",tvDcNoEfec.getText().toString());
+        editor.putString("DcEfec",tvDcEfec.getText().toString());
 
         editor.putString("DjEnt",tvDjEnt.getText().toString());
         editor.putString("DjSort",tvDjSort.getText().toString());
         editor.putString("DjNoEfec",tvDjNoEfec.getText().toString());
+        editor.putString("DjEfec",tvDjEfec.getText().toString());
 
         editor.putString("DvEnt",tvDvEnt.getText().toString());
         editor.putString("DvSort",tvDvSort.getText().toString());
         editor.putString("DvNoEfec",tvDvNoEfec.getText().toString());
+        editor.putString("DvEfec",tvDvEfec.getText().toString());
 
         editor.putString("DsEnt",tvDsEnt.getText().toString());
         editor.putString("DsSort",tvDsSort.getText().toString());
         editor.putString("DsNoEfec",tvDsNoEfec.getText().toString());
+        editor.putString("DsEfec",tvDsEfec.getText().toString());
 
         editor.putString("DgEnt",tvDgEnt.getText().toString());
         editor.putString("DgSort",tvDgSort.getText().toString());
         editor.putString("DgNoEfec",tvDgNoEfec.getText().toString());
+        editor.putString("DgEfec",tvDgEfec.getText().toString());
 
         editor.putBoolean("verFinde", verFinde);
 
