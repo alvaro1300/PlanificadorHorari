@@ -42,6 +42,7 @@ public class HoresActivity extends AppCompatActivity {
     int numero;
     String horaStringOriginal;
     String totalSemanaOriginal;
+    String totalSemanaModificat;
 
 
 

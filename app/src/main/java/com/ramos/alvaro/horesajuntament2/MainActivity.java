@@ -183,11 +183,13 @@ public class MainActivity extends AppCompatActivity {
         }
 */
 
+        //Recorremos la listaSetmana que contiene los 7 dias de la semana con 4 valores por cada dia
+        //Se limita el recorrido dependiendo si se esta mostrando el finde o no.
         for (int i=0;i<limitDies;i++){
             List<TextView> listaD = listaSetmana.get(i);
 
             //TextView resDia = listaResDia.get(3);
-            TextView resDia = listaD.get(TOTAL_DIA);
+            TextView resDia = listaD.get(TOTAL_DIA); //Obtenemos el TextView del resultado del dia
 
             String ent = listaD.get(ENTRADA).getText().toString();
             String sort = listaD.get(SORTIDA).getText().toString();
@@ -219,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
     public String calcularDia (String ent, String sort, String noEfect){
         String ret=ERROR;
 
+        //Cambiamos el "-" que muestra el textview noEfect por el valor "0.00" en caso que sea necesario
         if(noEfect.equals(NOVALUE)){
            noEfect = TIME_VALUE_0;
         }
@@ -229,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
 
         }else {
 
-            Calendar calEnt= stringToCalendar(ent, HOUR_FORMAT);
-            Calendar calSort= stringToCalendar(sort, HOUR_FORMAT);
+            Calendar calEnt= Operacions.stringToCalendar(ent, HOUR_FORMAT);
+            Calendar calSort= Operacions.stringToCalendar(sort, HOUR_FORMAT);
             //Calendar calNoEfect= stringToCalendar(noEfect, TIME_FORMAT);
 
             int minEnt = calEnt.get(Calendar.MINUTE);
@@ -254,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 calSort.add(Calendar.MINUTE, -minNoEfect);
                 calSort.add(Calendar.HOUR_OF_DAY, -horaNoEfect);
 
-                ret = calendarToString(calSort, TIME_FORMAT);
+                ret = Operacions.calendarToString(calSort, TIME_FORMAT);
 
                 //System.out.println("La hora resultat es: " + res);
 
@@ -277,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
         String resTotal = ERROR;
         boolean allDataOk = true;
-        Calendar calRes = stringToCalendar("00.00", TIME_FORMAT2);
+        Calendar calRes = Operacions.stringToCalendar("00.00", TIME_FORMAT2);
 
 
         for (int i = 0; i < limitDies; i++) {
@@ -297,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
         if (allDataOk){
             int dias = calRes.get(Calendar.DAY_OF_MONTH);
             int horas = calRes.get(Calendar.HOUR_OF_DAY);
-            String minutes = calendarToString(calRes, MINUTE_FORMAT);
+            String minutes = Operacions.calendarToString(calRes, MINUTE_FORMAT);
 
             resTotal = 24*(dias-1) + horas+"."+minutes;
         }
@@ -364,7 +367,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Alvaro dias: "+dia);
         int hora = difCal.get(Calendar.HOUR_OF_DAY);
         System.out.println("Alvaro hora: "+hora);
-        String minutes = calendarToString(difCal, MINUTE_FORMAT);
+        String minutes = Operacions.calendarToString(difCal, MINUTE_FORMAT);
         System.out.println("Alvaro minutes: "+minutes);
         int horasDif = 24*(dia-1) + hora;
         System.out.println("Alvaro horasDif: "+horasDif);
@@ -461,28 +464,67 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void trobarId(){
+    /**
+     * Compara el id del View que se guardó antes de cambiar de pantalla con la lista de TextView
+     * de cada dia de la semana. Cuando lo encuentra guarda el TextView en la variable itemSel
+     * para poder realizar los cambios que ha devuelto el intent
+     */
+    public void recuperarTextViewPerId(){
         //ArrayList<TextView> listDay;
 
+        boolean sortir = false;
         for(List<TextView> listDay: listaSetmana){
 
             for (TextView item: listDay){
                 if(item.getId()==id){
                     itemSel = item;
+                    sortir = true;
                     break;
                 }
             }
+            if (sortir){
+                break;
+            }
+
+
         }
     }
 
 
 
+    public int trobarDiaSetPerTextViewClicat (View v){
+        int diaSetmana=0;
+        for (int i=0; i<limitDies;i++){
+            List<TextView> listaValoresDia = listaSetmana.get(i);
+            for (TextView itemSel: listaValoresDia){
+                if(v.getId()==itemSel.getId()){
+                    diaSetmana = i;
+                    i = limitDies;
+                    break;
+                }
+            }
+        }
+
+        return diaSetmana;
+    }
 
 
 
     /* ----------------------------BOTONES-----------------------------------------*/
 
     public void bAccionEntSort(View v){
+
+
+        //Obtenemos el dia de la semana para poder encontrar su CheckBox correspondiente
+        int diaSetmana = trobarDiaSetPerTextViewClicat(v);
+
+        //Obtenemos el objeto CheckBox en funcion del dia de la semana
+        CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
+        boolean checked = false;
+        checked = checkBoxDelDia.isChecked();
+
+
+
         TextView tvSel = (TextView)v;
         String tvSelString = tvSel.getText().toString();
         String totalSemana = tvResult.getText().toString();
@@ -598,7 +640,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        trobarId();
+        recuperarTextViewPerId();
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
 
