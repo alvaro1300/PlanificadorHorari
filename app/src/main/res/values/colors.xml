@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorFinde">#d7d7f7</color>
+    <color name="colorFinde2">#eaded6</color>
+    <color name="colorSeparador">#cae0e7</color>
+    <color name="colorFinde3">#2dff8e0c</color>
+    <color name="colorFindeResult">#5aaaaaaa</color>
+    <color name="colorSeparador2">#e1f1f6</color>
+    <color name="colorResult">#e1e1e1</color>
+</resources>

@@ -1,0 +1,777 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ramos.alvaro.horesajuntament2.MainActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btDesar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
+                <TableRow
+                    android:id="@+id/trTitol"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvTitolEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="    Entrada    "
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvTitolSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="    Sortida    "
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvTitolNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Efect"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvTitolEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  H. Efect  "
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/tvTitolFest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Festiu" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trDl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorSeparador2">
+
+                    <TextView
+                        android:id="@+id/tvDl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Dl"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvDlEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="08:00"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDlSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingEnd="5dp"
+                        android:paddingLeft="5dp"
+                        android:text="14:30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDlNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionNoEfect"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="0.30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDlEfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorControlHighlight"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="9.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp" />
+
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground">
+
+                        <CheckBox
+                            android:id="@+id/checkDlFest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            android:checked="false"
+                            android:onClick="bAccionFestiu"
+                            android:textAlignment="center"
+                            app:buttonTint="@android:color/darker_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trDm"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvDm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Dm"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvDmEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="01:00"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDmSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="17:30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDmNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionNoEfect"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="0.30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDmEfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorControlHighlight"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="9.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp" />
+
+                    <CheckBox
+                        android:id="@+id/checkDmFest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:onClick="bAccionFestiu"
+                        android:textAlignment="center"
+                        app:buttonTint="@android:color/darker_gray" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/TrDc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorSeparador2">
+
+                    <TextView
+                        android:id="@+id/tvDc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Dc"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvDcEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="01:00"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDcSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="17:30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDcNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionNoEfect"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="0.30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDcEfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorControlHighlight"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="9.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp" />
+
+                    <!-- <CheckBox
+                        android:id="@+id/checkDcFest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:textAlignment="center"
+                        app:buttonTint="@android:color/background_dark" /> -->
+
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground">
+
+                        <CheckBox
+                            android:id="@+id/checkDcFest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            android:checked="false"
+                            android:onClick="bAccionFestiu"
+                            android:textAlignment="center"
+                            app:buttonTint="@android:color/darker_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </android.support.constraint.ConstraintLayout>
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trDj"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvDj"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Dj"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvDjEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="01:00"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDjSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="17:30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDjNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionNoEfect"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="0.30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDjEfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorControlHighlight"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="9.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp" />
+
+                    <CheckBox
+                        android:id="@+id/checkDjFest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:onClick="bAccionFestiu"
+                        android:textAlignment="center"
+                        app:buttonTint="@android:color/darker_gray" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trDv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorSeparador2">
+
+                    <TextView
+                        android:id="@+id/tvDv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Dv"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvDvEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="01:00"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDvSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="17:30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDvNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionNoEfect"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="0.30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDvEfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorControlHighlight"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="9.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp" />
+
+                    <!--<CheckBox
+                        android:id="@+id/checkDvFest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:textAlignment="center"
+                        app:buttonTint="@android:color/darker_gray" />-->
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground">
+
+                        <CheckBox
+                            android:id="@+id/checkDvFest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            android:checked="false"
+                            android:onClick="bAccionFestiu"
+                            android:textAlignment="center"
+                            app:buttonTint="@android:color/darker_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trDs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorFinde2">
+
+                    <TextView
+                        android:id="@+id/tvDs"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Ds"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvDsEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="01:00"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDsSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="17:30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDsNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionNoEfect"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="0.30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDsEfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorControlHighlight"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="9.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp" />
+
+                    <!-- <CheckBox
+                        android:id="@+id/checkDsFest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:textAlignment="center"
+                        app:buttonTint="@android:color/darker_gray" />-->
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground">
+
+                        <CheckBox
+                            android:id="@+id/checkDsFest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            android:checked="false"
+                            android:onClick="bAccionFestiu"
+                            android:textAlignment="center"
+                            app:buttonTint="@android:color/darker_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/trDg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorFinde2">
+
+                    <TextView
+                        android:id="@+id/tvDg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="Dg"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvDgEnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="01:00"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDgSort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionEntSort"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:text="17:30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDgNoEfec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="bAccionNoEfect"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="0.30"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/tvDgEfect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="?attr/colorControlHighlight"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:text="9.30"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="24sp" />
+
+                    <!--<CheckBox
+                        android:id="@+id/checkDgFest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:textAlignment="center"
+                        app:buttonTint="@android:color/darker_gray" />-->
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/colorBackground"
+                        android:onClick="bAccionFestiu">
+
+                        <CheckBox
+                            android:id="@+id/checkDgFest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:layout_marginLeft="0dp"
+                            android:layout_marginRight="0dp"
+                            android:layout_marginTop="0dp"
+                            android:checked="false"
+                            android:onClick="bAccionFestiu"
+                            android:textAlignment="center"
+                            app:buttonTint="@android:color/darker_gray"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </android.support.constraint.ConstraintLayout>
+
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/tvTitolResum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="20dp"
+                android:text="TOTAL SETMANA"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="419dp" />
+
+            <TextView
+                android:id="@+id/tvResultat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+
+                android:background="@drawable/esquinas_redondeadas"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:text="37.47"
+                android:textColor="?android:attr/editTextColor"
+                android:textSize="40sp"
+                tools:layout_editor_absoluteX="120dp"
+                tools:layout_editor_absoluteY="479dp" />
+                <!--android:background="@android:color/holo_green_light"-->
+
+
+            <TextView
+                android:id="@+id/tvDiferencia"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:text="TextView"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btDesar"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:onClick="bAccionGuardarDadesModel"
+        android:text="Desar"
+        android:textColor="@android:color/background_light"
+        android:textSize="12sp"
+        app:layout_constraintRight_toLeftOf="@+id/btCarregar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btCarregar"
+        android:layout_width="109dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:onClick="bAccionCarregarDadesModel"
+        android:text="Carregar"
+        android:textColor="@android:color/background_light"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:onClick="bAccionOcultarFinde"
+        android:text="Cap de setmana"
+        android:textColor="@android:color/background_light"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/btCarregar"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ramos.alvaro.horesajuntament2.HoresActivity">
+
+    <Button
+        android:id="@+id/btCancel"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@android:color/darker_gray"
+        android:fontFamily="sans-serif"
+        android:onClick="cancel"
+        android:text="Cancel"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/bt0" />
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button2"
+        android:text="2"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/bt0"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button0"
+        android:text="0"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btOk"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:fontFamily="sans-serif"
+        android:onClick="bAccept"
+        android:text="Ok"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/bt0" />
+
+    <TextView
+        android:id="@+id/tvHores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="sans-serif"
+        android:onClick="pressHores"
+        android:text="00"
+        android:textSize="70sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDosPunts"
+        app:layout_constraintRight_toLeftOf="@+id/tvDosPunts" />
+
+    <TextView
+        android:id="@+id/tvDosPunts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:text=":"
+        android:textSize="70sp"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/bt8"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/tvMinuts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="sans-serif"
+        android:onClick="pressMinuts"
+        android:text="00"
+        android:textSize="70sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDosPunts"
+        app:layout_constraintLeft_toRightOf="@+id/tvDosPunts" />
+
+    <Button
+        android:id="@+id/bt1"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button1"
+        android:text="1"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt0"
+        app:layout_constraintRight_toLeftOf="@+id/bt2" />
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button3"
+        android:text="3"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt0"
+        app:layout_constraintLeft_toRightOf="@+id/bt2" />
+
+    <Button
+        android:id="@+id/bt4"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button4"
+        android:text="4"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bt5"
+        app:layout_constraintRight_toLeftOf="@+id/bt5" />
+
+    <Button
+        android:id="@+id/bt5"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button5"
+        android:text="5"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/bt6"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button6"
+        android:text="6"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bt5"
+        app:layout_constraintLeft_toRightOf="@+id/bt5" />
+
+    <Button
+        android:id="@+id/bt7"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button7"
+        android:text="7"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt4"
+        app:layout_constraintRight_toLeftOf="@+id/bt8" />
+
+    <Button
+        android:id="@+id/bt8"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button8"
+        android:text="8"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/bt9"
+        android:layout_width="120dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:fontFamily="sans-serif"
+        android:onClick="button9"
+        android:text="9"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="@+id/bt8"
+        app:layout_constraintLeft_toRightOf="@+id/bt8" />
+
+    <TextView
+        android:id="@+id/tvTitolHores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="hores"
+        app:layout_constraintBottom_toTopOf="@+id/tvHores"
+        app:layout_constraintLeft_toLeftOf="@+id/tvHores"
+        app:layout_constraintRight_toRightOf="@+id/tvHores" />
+
+    <TextView
+        android:id="@+id/tvTitolMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:text="minuts"
+        app:layout_constraintBottom_toTopOf="@+id/tvMinuts"
+        app:layout_constraintLeft_toLeftOf="@+id/tvMinuts"
+        app:layout_constraintRight_toRightOf="@+id/tvMinuts" />
+</android.support.constraint.ConstraintLayout>
