@@ -248,15 +248,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="7dp"
-        android:background="@android:color/darker_gray"
+        android:background="@drawable/esquinas_redondeadas"
         android:padding="10dp"
         android:text="00.00"
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
         app:layout_constraintRight_toLeftOf="@+id/constraintLayout"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView6"

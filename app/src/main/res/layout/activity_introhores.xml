@@ -248,7 +248,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="7dp"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/esquinas_redondeadas"
             android:padding="10dp"
             android:text="00.00"
             android:textSize="30sp"

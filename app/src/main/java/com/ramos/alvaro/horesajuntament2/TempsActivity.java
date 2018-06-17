@@ -2,12 +2,16 @@ package com.ramos.alvaro.horesajuntament2;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,6 +34,7 @@ public class TempsActivity extends AppCompatActivity {
 
 
 
+    String colorAplicado = Constantes.COLOR_ERROR;
 
     private TextView tvHores, tvMinuts, tvDosPunts, tvDifTemps;
     private TextView tvTotalSemana;
@@ -146,6 +151,9 @@ public class TempsActivity extends AppCompatActivity {
         valueMin = "00";
         */
         value = "00";
+
+        String diferencia = calcularDiferencia(totalSemanaModificat);
+        tvDifTemps.setText(diferencia);
 
     }
 
@@ -312,6 +320,113 @@ public class TempsActivity extends AppCompatActivity {
 
     }
 
+    public void calcularTot() {
+        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
+
+
+        if (totalSemanaModificat.equalsIgnoreCase(Constantes.ERROR)){
+            tvDifTemps.setText("");
+            colorAplicado = Constantes.COLOR_ERROR;
+
+        }else {
+            String diferencia = calcularDiferencia(totalSemanaModificat);
+            tvDifTemps.setText(diferencia);
+
+        }
+
+        cambiarColores ();
+
+
+    }
+
+
+
+    public String calcularDiferencia (String resTotal){
+        String diferencia;
+        Calendar calLimSetmana = Calendar.getInstance();
+        Calendar calTotalSetmana = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.TIME_FORMAT2);
+        try{
+            calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA));
+            calTotalSetmana.setTime(sdf.parse(resTotal));
+        } catch (ParseException ex) {
+
+            //System.out.println("Error al convertir de string a calendar: " + data);
+        }
+
+        diferencia = convDifCalToTemps(calLimSetmana, calTotalSetmana);
+
+
+        return diferencia;
+    }
+
+    public String convDifCalToTemps (Calendar calLimSetmana, Calendar calTotalSetmana){
+        String temps;
+
+
+        long millisLimSet = calLimSetmana.getTimeInMillis();
+        long millisTotSet = calTotalSetmana.getTimeInMillis();
+
+        Calendar difCal = Calendar.getInstance();
+
+        int comparacio = calTotalSetmana.compareTo(calLimSetmana);
+
+
+        long diff = millisTotSet - millisLimSet;
+
+
+        difCal.setTimeInMillis(Math.abs(diff));
+        long millisdifCal = difCal.getTimeInMillis();
+
+
+        difCal.add(Calendar.HOUR_OF_DAY,-1);
+
+
+        int dia = difCal.get(Calendar.DAY_OF_MONTH);
+
+        int hora = difCal.get(Calendar.HOUR_OF_DAY);
+
+        String minutes = Operacions.calendarToString(difCal, Constantes.MINUTE_FORMAT);
+
+        int horasDif = 24*(dia-1) + hora;
+
+
+        if(diff == 0L){
+            temps = "0.00";
+            colorAplicado = Constantes.COLOR_POSITIVO;
+        } else if (diff>0L){
+
+            colorAplicado = Constantes.COLOR_POSITIVO;
+            temps = "+"+String.valueOf(horasDif)+"."+minutes;
+
+        } else {
+            colorAplicado = Constantes.COLOR_NEGATIVO;
+            temps = "-"+String.valueOf(horasDif)+"."+minutes;
+
+        }
+
+        return temps;
+    }
+
+    public void cambiarColores (){
+        //Cambiar el color del tvResult
+        int color = Color.parseColor(colorAplicado);
+        Drawable background = tvTotalSemana.getBackground();
+
+
+        if (background instanceof GradientDrawable) {
+            // cast to 'GradientDrawable'
+            GradientDrawable gradientDrawable = (GradientDrawable) background;
+            gradientDrawable.setColor(color);
+        }
+
+
+    }
+
+
 
 
     /* ----------------------------BOTONES-----------------------------------------*/
@@ -381,9 +496,12 @@ public class TempsActivity extends AppCompatActivity {
     public void button1 (View v){
         String num = "1";
         accionButton(num);
+        /*
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
         totalSemanaModificat=calcularTotalSetmana();
         tvTotalSemana.setText(totalSemanaModificat);
+        */
+        calcularTot();
 
     }
 
@@ -391,73 +509,55 @@ public class TempsActivity extends AppCompatActivity {
     public void button2 (View v){
         String num = "2";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button3 (View v){
         String num = "3";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button4 (View v){
         String num = "4";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button5 (View v){
         String num = "5";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button6 (View v){
         String num = "6";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button7 (View v){
         String num = "7";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button8 (View v){
         String num = "8";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button9 (View v){
         String num = "9";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
     public void button0 (View v){
         String num = "0";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
-        totalSemanaModificat=calcularTotalSetmana();
-        tvTotalSemana.setText(totalSemanaModificat);
+        calcularTot();
     }
 
 
