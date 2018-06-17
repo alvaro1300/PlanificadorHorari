@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -17,8 +18,6 @@ import java.util.regex.Pattern;
  */
 
 public class TempsActivity extends AppCompatActivity {
-
-    public static String ERROR =" -E- ";
 
     public static final int HORES = 0;
     public static final int MINUTS = 1;
@@ -31,7 +30,7 @@ public class TempsActivity extends AppCompatActivity {
 
 
 
-    private TextView tvHores, tvMinuts, tvDosPunts;
+    private TextView tvHores, tvMinuts, tvDosPunts, tvDifTemps;
     private TextView tvTotalSemana;
     private Button btCancel, btOk, bt1, bt2,bt3, bt4 ,bt5, bt6, bt7, bt8, bt9;
     private TextView tvFocus = tvHores;
@@ -40,15 +39,21 @@ public class TempsActivity extends AppCompatActivity {
     private int posInterna;
     boolean posHores;
     boolean posMinuts;
+    /*
     String valueHores;
     String valueMin;
+    */
     String value;
+
     int numero;
 
     String horaStringOriginal;
     String horaStringModificat=null;
     String totalSemanaOriginal;
     String totalSemanaModificat=null;
+
+    Calendar tempsBase;
+    String tempsBaseString;
 
 
 
@@ -71,7 +76,7 @@ public class TempsActivity extends AppCompatActivity {
         totalSemanaModificat = recuperaEstado.getString(STATE_TEMPS_SETMANAL);
 
         ompleHoraMinuts(horaStringModificat);
-        //ompleTotalSetmana(totalSemanaModificat);
+        ompleTotalSetmana(totalSemanaModificat);
     }
 
 
@@ -84,6 +89,7 @@ public class TempsActivity extends AppCompatActivity {
         tvMinuts=(TextView)findViewById(R.id.tvMinuts);
         tvDosPunts=(TextView)findViewById(R.id.tvDosPunts);
         tvTotalSemana=(TextView)findViewById(R.id.tvTotalSemana);
+        tvDifTemps=(TextView)findViewById(R.id.tvDifTemps);
 
         btOk=(Button)findViewById(R.id.btOk);
         btCancel=(Button)findViewById(R.id.btCancel);
@@ -107,6 +113,8 @@ public class TempsActivity extends AppCompatActivity {
         horaStringModificat = horaStringOriginal;
         totalSemanaModificat = totalSemanaOriginal;
 
+        tempsBaseString = determinarTempsBase();
+
 /*
         posHores = true;
         posMinuts = true;
@@ -118,9 +126,10 @@ public class TempsActivity extends AppCompatActivity {
         itemTime.add(tvMinuts);
 
         tvHores.setTextColor(Color.BLUE);
-
+/*
         valueHores = "00";
         valueMin = "00";
+        */
         value = "00";
 
     }
@@ -159,6 +168,60 @@ public class TempsActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+
+    public String determinarTempsBase(){
+        String ret;
+
+        tempsBase = Operacions.stringToCalendar(totalSemanaOriginal, Constantes.TIME_FORMAT2);
+
+        String minString = tvHores.getText().toString();
+        String horaString= tvMinuts.getText().toString();
+
+        int minResDia = Integer.parseInt(minString);
+        int horaResDia = Integer.parseInt(horaString);
+
+        tempsBase.add(Calendar.MINUTE, -minResDia);
+        tempsBase.add(Calendar.HOUR_OF_DAY, -horaResDia);
+
+        int dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+        int horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+        String minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+        ret = 24*(dias-1) + horas+"."+minutes;
+
+
+        return ret;
+    }
+
+
+    public String calcularTotalSetmana(){
+
+        String ret;
+
+        tempsBase = Operacions.stringToCalendar(tempsBaseString, Constantes.TIME_FORMAT2);
+
+        String minString = tvHores.getText().toString();
+        String horaString= tvMinuts.getText().toString();
+
+        int minResDia = Integer.parseInt(minString);
+        int horaResDia = Integer.parseInt(horaString);
+
+        tempsBase.add(Calendar.MINUTE, minResDia);
+        tempsBase.add(Calendar.HOUR_OF_DAY, horaResDia);
+
+        int dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+        int horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+        String minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+        ret = 24*(dias-1) + horas+"."+minutes;
+
+
+        return ret;
+    }
+
+
+
 
     public void cancel (View v){
 
@@ -220,6 +283,8 @@ public class TempsActivity extends AppCompatActivity {
         String num = "1";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
 
     }
 
@@ -228,54 +293,72 @@ public class TempsActivity extends AppCompatActivity {
         String num = "2";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button3 (View v){
         String num = "3";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button4 (View v){
         String num = "4";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button5 (View v){
         String num = "5";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button6 (View v){
         String num = "6";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button7 (View v){
         String num = "7";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button8 (View v){
         String num = "8";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button9 (View v){
         String num = "9";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
     public void button0 (View v){
         String num = "0";
         accionButton(num);
         horaStringModificat= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
     }
 
 

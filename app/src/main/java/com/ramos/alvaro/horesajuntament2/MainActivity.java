@@ -23,39 +23,8 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String NOVALUE = "-";
-    public static String ERROR =" -E- ";
-    public static final String TIME_VALUE_0 = "0.00";
-    public static final String STATE_ID_VIEW = "idViewSelec";
-    public static final String LIMIT_HORES_SETMANA = "37.30";
-    public static final String TEMPS_EFECTIU_DIA_FESTIU = "7.30";
-    public static final String TEMPS_EFECTIU_DIA_DEFECTE = "7.30";
-    public static final String HORA_ENT_DEFECTE = "08:00";
-    public static final String HORA_SORT_DEFECTE = "15:30";
-    public static String HOUR_FORMAT = "HH:mm";
-    public static String TIME_FORMAT = "H.mm";
-    public static String TIME_FORMAT2 = "HH.mm";
-    public static String MINUTE_FORMAT = "mm";
-    public static int ENTRADA = 0;
-    public static int SORTIDA = 1;
-    public static int TEMPS_NOEFEC = 2;
-    public static int TOTAL_DIA = 3;
 
-
-    public static String ARXIU_DADES_MODEL = "dadesModel";
-    public static String ARXIU_DADES1 = "dades";
-    public static String ARXIU_DADES_FESTIU = "dadesFestiu";
-
-
-    String colorPositivo = "#43f275";
-    String colorNegativo ="#ff3535";
-    String colorError ="#d1c4c4";
-    String colorAplicado = colorError;
-
-    String colorTextoClaro ="#c2c4c4";
-
-
-
+    String colorAplicado = Constantes.COLOR_ERROR;
 
     private TextView tvDlEnt, tvDlSort, tvDlNoEfec, tvDlEfec;
     private TextView tvDmEnt, tvDmSort, tvDmNoEfec, tvDmEfec;
@@ -95,47 +64,13 @@ public class MainActivity extends AppCompatActivity {
     //String[] arrayCampsArxiuDades;
 
 
-
-
-
-
-
-    //SharedPreferences prefe;
-
-    public void crearListDiesSetmana(){
-        listDiaSetmana = new ArrayList<>();
-
-        String[] arrayDlNomCamps = {"DlEnt", "DlSort","DlNoEfec"};
-        String[] arrayDmNomCamps = {"DmEnt", "DmSort","DmNoEfec"};
-        String[] arrayDcNomCamps = {"DcEnt", "DcSort","DcNoEfec"};
-        String[] arrayDjNomCamps = {"DjEnt", "DjSort","DjNoEfec"};
-        String[] arrayDvNomCamps = {"DvEnt", "DvSort","DvNoEfec"};
-        String[] arrayDsNomCamps = {"DsEnt", "DsSort","DsNoEfec"};
-        String[] arrayDgNomCamps = {"DgEnt", "DgSort","DgNoEfec"};
-
-        listDiaSetmana.add(arrayDlNomCamps);
-        listDiaSetmana.add(arrayDmNomCamps);
-        listDiaSetmana.add(arrayDcNomCamps);
-        listDiaSetmana.add(arrayDjNomCamps);
-        listDiaSetmana.add(arrayDvNomCamps);
-        listDiaSetmana.add(arrayDsNomCamps);
-        listDiaSetmana.add(arrayDgNomCamps);
-
-
-
-    }
-
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
 
         super.onSaveInstanceState(savedInstanceState);
         //Almacenar la id del view selecionado cuando se toca sobre un numero de la pantalla
         //para editarlo
-        savedInstanceState.putInt(STATE_ID_VIEW, id);
-
-
-
-
+        savedInstanceState.putInt(Constantes.STATE_ID_VIEW, id);
 
     }
 
@@ -145,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         if (savedInstanceState != null){
-            id = savedInstanceState.getInt(STATE_ID_VIEW);
+            id = savedInstanceState.getInt(Constantes.STATE_ID_VIEW);
         }
 
 
@@ -183,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         tvDiferencia = (TextView)findViewById(R.id.tvDiferencia);
 
 
-        carregarDades(ARXIU_DADES1);
+        carregarDades(Constantes.ARXIU_DADES1);
         visivilidadFinde();
         calcularTot();
         cambiarColores ();
@@ -207,11 +142,11 @@ public class MainActivity extends AppCompatActivity {
             List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
 
             //TextView resDia = listaResDia.get(3);
-            TextView resDia = listaValorsDia.get(TOTAL_DIA); //Obtenemos el TextView del resultado del dia
+            TextView resDia = listaValorsDia.get(Constantes.TOTAL_DIA); //Obtenemos el TextView del resultado del dia
 
-            String ent = listaValorsDia.get(ENTRADA).getText().toString();
-            String sort = listaValorsDia.get(SORTIDA).getText().toString();
-            String noEfect = listaValorsDia.get(TEMPS_NOEFEC).getText().toString();
+            String ent = listaValorsDia.get(Constantes.ENTRADA).getText().toString();
+            String sort = listaValorsDia.get(Constantes.SORTIDA).getText().toString();
+            String noEfect = listaValorsDia.get(Constantes.TEMPS_NOEFEC).getText().toString();
             //String efect = listaValorsDia.get(3).getText().toString();
 
             String resultat = calcularDia(ent, sort, noEfect, diaSetmana);
@@ -221,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
         String resTotalSetString =  calcularTotalSetmana();
         tvResult.setText(resTotalSetString);
 
-        if (resTotalSetString.equalsIgnoreCase(ERROR)){
+        if (resTotalSetString.equalsIgnoreCase(Constantes.ERROR)){
             tvDiferencia.setText("");
-            colorAplicado = colorError;
+            colorAplicado = Constantes.COLOR_ERROR;
 
         }else {
             String diferencia = calcularDiferencia(resTotalSetString);
@@ -237,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String calcularDia (String ent, String sort, String noEfect, int diaSetmana){
-        String ret=ERROR;
+        String ret= Constantes.ERROR;
 
         //Obtenemos el objeto CheckBox en funcion del dia de la semana
         CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
@@ -247,26 +182,26 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Cambiamos el "-" que muestra el textview noEfect por el valor "0.00" en caso que sea necesario
-        if(noEfect.equals(NOVALUE)){
-           noEfect = TIME_VALUE_0;
+        if(noEfect.equals(Constantes.NOVALUE)){
+           noEfect = Constantes.TIME_VALUE_0;
         }
 
         if(checked){
 
-            ret=TEMPS_EFECTIU_DIA_FESTIU;
+            ret= Constantes.TEMPS_EFECTIU_DIA_FESTIU;
 
         }else {
 
-            if (ent.equals(NOVALUE) || sort.equals(NOVALUE)){
+            if (ent.equals(Constantes.NOVALUE) || sort.equals(Constantes.NOVALUE)){
 
 
 
-                ret=listaSetmana.get(diaSetmana).get(TOTAL_DIA).getText().toString(); //Este valor es el que retorna el intent del activity que se
+                ret=listaSetmana.get(diaSetmana).get(Constantes.TOTAL_DIA).getText().toString(); //Este valor es el que retorna el intent del activity que se
                 // abre para cambiar directamente el valor del temps Efectiu del Dia
 
             }else{
-                Calendar calEnt= Operacions.stringToCalendar(ent, HOUR_FORMAT);
-                Calendar calSort= Operacions.stringToCalendar(sort, HOUR_FORMAT);
+                Calendar calEnt= Operacions.stringToCalendar(ent, Constantes.HOUR_FORMAT);
+                Calendar calSort= Operacions.stringToCalendar(sort, Constantes.HOUR_FORMAT);
                 //Calendar calNoEfect= stringToCalendar(noEfect, TIME_FORMAT);
 
                 int minEnt = calEnt.get(Calendar.MINUTE);
@@ -285,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
                     calSort.add(Calendar.MINUTE, -minNoEfect);
                     calSort.add(Calendar.HOUR_OF_DAY, -horaNoEfect);
 
-                    ret = Operacions.calendarToString(calSort, TIME_FORMAT);
+                    ret = Operacions.calendarToString(calSort, Constantes.TIME_FORMAT);
 
                     //System.out.println("La hora resultat es: " + res);
 
@@ -305,14 +240,14 @@ public class MainActivity extends AppCompatActivity {
 
     public String calcularTotalSetmana(){
 
-        String resTotal = ERROR;
+        String resTotal = Constantes.ERROR;
         boolean allDataOk = true;
-        Calendar calRes = Operacions.stringToCalendar("00.00", TIME_FORMAT2);
+        Calendar calRes = Operacions.stringToCalendar("00.00", Constantes.TIME_FORMAT2);
 
 
         for (int i = 0; i < limitDies; i++) {
             String resDia= listaResDia.get(i).getText().toString();
-            if (resDia.equalsIgnoreCase(ERROR)){
+            if (resDia.equalsIgnoreCase(Constantes.ERROR)){
                 allDataOk = false;
             } else {
                 String[] arrayResDia = resDia.split(Pattern.quote("."));
@@ -327,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         if (allDataOk){
             int dias = calRes.get(Calendar.DAY_OF_MONTH);
             int horas = calRes.get(Calendar.HOUR_OF_DAY);
-            String minutes = Operacions.calendarToString(calRes, MINUTE_FORMAT);
+            String minutes = Operacions.calendarToString(calRes, Constantes.MINUTE_FORMAT);
 
             resTotal = 24*(dias-1) + horas+"."+minutes;
         }
@@ -341,9 +276,9 @@ public class MainActivity extends AppCompatActivity {
         Calendar calLimSetmana = Calendar.getInstance();
         Calendar calTotalSetmana = Calendar.getInstance();
 
-        SimpleDateFormat sdf = new SimpleDateFormat(TIME_FORMAT2);
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.TIME_FORMAT2);
         try{
-            calLimSetmana.setTime(sdf.parse(LIMIT_HORES_SETMANA));
+            calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA));
             calTotalSetmana.setTime(sdf.parse(resTotal));
         } catch (ParseException ex) {
 
@@ -394,21 +329,21 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Alvaro dias: "+dia);
         int hora = difCal.get(Calendar.HOUR_OF_DAY);
         System.out.println("Alvaro hora: "+hora);
-        String minutes = Operacions.calendarToString(difCal, MINUTE_FORMAT);
+        String minutes = Operacions.calendarToString(difCal, Constantes.MINUTE_FORMAT);
         System.out.println("Alvaro minutes: "+minutes);
         int horasDif = 24*(dia-1) + hora;
         System.out.println("Alvaro horasDif: "+horasDif);
 
         if(diff == 0L){
             temps = "0.00";
-            colorAplicado = colorPositivo;
+            colorAplicado = Constantes.COLOR_POSITIVO;
         } else if (diff>0L){
 
-            colorAplicado = colorPositivo;
+            colorAplicado = Constantes.COLOR_POSITIVO;
             temps = "+"+String.valueOf(horasDif)+"."+minutes;
 
         } else {
-            colorAplicado = colorNegativo;
+            colorAplicado = Constantes.COLOR_NEGATIVO;
             temps = "-"+String.valueOf(horasDif)+"."+minutes;
 
         }
@@ -431,10 +366,10 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i=0; i<7; i++){
             List listaSet = listaSetmana.get(i);
-            TextView tv =(TextView) listaSet.get(TEMPS_NOEFEC);
+            TextView tv =(TextView) listaSet.get(Constantes.TEMPS_NOEFEC);
             String tvString = tv.getText().toString();
             if(tvString.equals("0.00")){
-                tv.setTextColor(Color.parseColor(colorTextoClaro));
+                tv.setTextColor(Color.parseColor(Constantes.COLOR_TEXTO_CLARO));
             } else {
                 tv.setTextColor(Color.GRAY);
             }
@@ -472,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         // Another activity is taking focus (this activity is about to be "paused").
-        guardarDades (ARXIU_DADES1);
+        guardarDades (Constantes.ARXIU_DADES1);
 
     }
 
@@ -563,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
         String totalSemana = tvResult.getText().toString();
 
         if (!checked){
-            if(!tvSelString.equals(NOVALUE)){
+            if(!tvSelString.equals(Constantes.NOVALUE)){
 
                 id = v.getId(); //Guardamos la id del view clickado para que al volver a esta activity
                 //se sepa que boton lanzó el intent . Esto se harà gracias al onSaveInstanceState
@@ -575,9 +510,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i,1);
             } else {
                 List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
-                listaValorsDia.get(ENTRADA).setText(HORA_ENT_DEFECTE);
-                listaValorsDia.get(SORTIDA).setText(HORA_SORT_DEFECTE);
-                listaValorsDia.get(TEMPS_NOEFEC).setText(NOVALUE);
+                listaValorsDia.get(Constantes.ENTRADA).setText(Constantes.HORA_ENT_DEFECTE);
+                listaValorsDia.get(Constantes.SORTIDA).setText(Constantes.HORA_SORT_DEFECTE);
+                listaValorsDia.get(Constantes.TEMPS_NOEFEC).setText(Constantes.NOVALUE);
                 calcularTot();
 
 
@@ -605,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
         String totalSemana = tvResult.getText().toString();
 
         if(!checked){
-            if(!tvSelString.equals(NOVALUE)){
+            if(!tvSelString.equals(Constantes.NOVALUE)){
                 id = v.getId();
 
                 Intent i = new Intent(this, TempsActivity.class);
@@ -618,17 +553,17 @@ public class MainActivity extends AppCompatActivity {
                 id = v.getId();
 
                 List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
-                String stringEnt = listaValorsDia.get(ENTRADA).getText().toString();
-                String stringSort = listaValorsDia.get(SORTIDA).getText().toString();
+                String stringEnt = listaValorsDia.get(Constantes.ENTRADA).getText().toString();
+                String stringSort = listaValorsDia.get(Constantes.SORTIDA).getText().toString();
 
-                if(stringEnt.equals(NOVALUE) || stringSort.equals(NOVALUE)){
-                    listaValorsDia.get(ENTRADA).setText(HORA_ENT_DEFECTE);
-                    listaValorsDia.get(SORTIDA).setText(HORA_SORT_DEFECTE);
+                if(stringEnt.equals(Constantes.NOVALUE) || stringSort.equals(Constantes.NOVALUE)){
+                    listaValorsDia.get(Constantes.ENTRADA).setText(Constantes.HORA_ENT_DEFECTE);
+                    listaValorsDia.get(Constantes.SORTIDA).setText(Constantes.HORA_SORT_DEFECTE);
                     calcularTot();
 
                 } else {
                     Intent i = new Intent(this, TempsActivity.class);
-                    i.putExtra("tempsStringOriginal", TIME_VALUE_0);
+                    i.putExtra("tempsStringOriginal", Constantes.TIME_VALUE_0);
                     i.putExtra("totalSemanaStringOriginal", totalSemana);
                     startActivityForResult(i,2);
                 }
@@ -656,12 +591,12 @@ public class MainActivity extends AppCompatActivity {
         if(!checked){
 
             id = v.getId();
-            if(tvSelString.equals(ERROR)){
+            if(tvSelString.equals(Constantes.ERROR)){
 
-                tvSel.setText(TEMPS_EFECTIU_DIA_DEFECTE);
-                listaSetmana.get(diaSetmana).get(ENTRADA).setText(NOVALUE);
-                listaSetmana.get(diaSetmana).get(SORTIDA).setText(NOVALUE);
-                listaSetmana.get(diaSetmana).get(TEMPS_NOEFEC).setText(NOVALUE);
+                tvSel.setText(Constantes.TEMPS_EFECTIU_DIA_DEFECTE);
+                listaSetmana.get(diaSetmana).get(Constantes.ENTRADA).setText(Constantes.NOVALUE);
+                listaSetmana.get(diaSetmana).get(Constantes.SORTIDA).setText(Constantes.NOVALUE);
+                listaSetmana.get(diaSetmana).get(Constantes.TEMPS_NOEFEC).setText(Constantes.NOVALUE);
                 calcularTot();
                 totalSemana = tvResult.getText().toString();
                 tvSelString = tvSel.getText().toString();
@@ -694,12 +629,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void bAccionGuardarDadesModel(View v){
-        guardarDades(ARXIU_DADES_MODEL);
+        guardarDades(Constantes.ARXIU_DADES_MODEL);
     }
 
     public void bAccionCarregarDadesModel(View v){
 
-        carregarDades (ARXIU_DADES_MODEL);
+        carregarDades (Constantes.ARXIU_DADES_MODEL);
         calcularTot();
     }
 
@@ -720,16 +655,16 @@ public class MainActivity extends AppCompatActivity {
                 List<TextView> diaSelecionat = listaSetmana.get(i);
                 if(checked){
                     //Guardamos los datos si no esta checked para poder recuperarlos al desmarcar
-                    guardarUnDia(ARXIU_DADES_FESTIU,i);
+                    guardarUnDia(Constantes.ARXIU_DADES_FESTIU,i);
 
-                    diaSelecionat.get(ENTRADA).setText(NOVALUE);
-                    diaSelecionat.get(SORTIDA).setText(NOVALUE);
-                    diaSelecionat.get(TEMPS_NOEFEC).setText(NOVALUE);
+                    diaSelecionat.get(Constantes.ENTRADA).setText(Constantes.NOVALUE);
+                    diaSelecionat.get(Constantes.SORTIDA).setText(Constantes.NOVALUE);
+                    diaSelecionat.get(Constantes.TEMPS_NOEFEC).setText(Constantes.NOVALUE);
 
 
 
                 }else {
-                    carregarUnDia(ARXIU_DADES_FESTIU,i);
+                    carregarUnDia(Constantes.ARXIU_DADES_FESTIU,i);
 
                     /*
                     SharedPreferences prefe = getSharedPreferences(ARXIU_DADES_FESTIU, Context.MODE_PRIVATE);
@@ -771,8 +706,8 @@ public class MainActivity extends AppCompatActivity {
                 tempsNoEfect = data.getStringExtra("temps");
 
                 //Si retorna "0.00" se mostrara en pantalla "-"
-                if(tempsNoEfect.equals(TIME_VALUE_0)){
-                    fillTextValues(NOVALUE, itemSel);
+                if(tempsNoEfect.equals(Constantes.TIME_VALUE_0)){
+                    fillTextValues(Constantes.NOVALUE, itemSel);
 
                 }else{
                     fillTextValues(tempsNoEfect, itemSel);
@@ -785,9 +720,9 @@ public class MainActivity extends AppCompatActivity {
                 tempsEfect = data.getStringExtra("temps");
                 fillTextValues(tempsEfect, itemSel);
                 int diaSetmana = trobarDiaSetPerTextViewClicat(itemSel);
-                listaSetmana.get(diaSetmana).get(ENTRADA).setText(NOVALUE);
-                listaSetmana.get(diaSetmana).get(SORTIDA).setText(NOVALUE);
-                listaSetmana.get(diaSetmana).get(TEMPS_NOEFEC).setText(NOVALUE);
+                listaSetmana.get(diaSetmana).get(Constantes.ENTRADA).setText(Constantes.NOVALUE);
+                listaSetmana.get(diaSetmana).get(Constantes.SORTIDA).setText(Constantes.NOVALUE);
+                listaSetmana.get(diaSetmana).get(Constantes.TEMPS_NOEFEC).setText(Constantes.NOVALUE);
 
 
             } else if (resultCode == RESULT_CANCELED){
@@ -943,6 +878,30 @@ public class MainActivity extends AppCompatActivity {
         
     }
 
+    public void crearListDiesSetmana(){
+        listDiaSetmana = new ArrayList<>();
+
+        String[] arrayDlNomCamps = {"DlEnt", "DlSort","DlNoEfec"};
+        String[] arrayDmNomCamps = {"DmEnt", "DmSort","DmNoEfec"};
+        String[] arrayDcNomCamps = {"DcEnt", "DcSort","DcNoEfec"};
+        String[] arrayDjNomCamps = {"DjEnt", "DjSort","DjNoEfec"};
+        String[] arrayDvNomCamps = {"DvEnt", "DvSort","DvNoEfec"};
+        String[] arrayDsNomCamps = {"DsEnt", "DsSort","DsNoEfec"};
+        String[] arrayDgNomCamps = {"DgEnt", "DgSort","DgNoEfec"};
+
+        listDiaSetmana.add(arrayDlNomCamps);
+        listDiaSetmana.add(arrayDmNomCamps);
+        listDiaSetmana.add(arrayDcNomCamps);
+        listDiaSetmana.add(arrayDjNomCamps);
+        listDiaSetmana.add(arrayDvNomCamps);
+        listDiaSetmana.add(arrayDsNomCamps);
+        listDiaSetmana.add(arrayDgNomCamps);
+
+
+
+    }
+
+
     public String[] arrayCampsArxiuDades (){
         String[] ret = {"DlEnt", "DlSort", "DlNoEfec",
                 "DmEnt", "DmSort","DmNoEfec",
@@ -1021,9 +980,9 @@ public class MainActivity extends AppCompatActivity {
 
         String[] dia = listDiaSetmana.get(diaSetmana); //Esto es para poder indicar el String que hace referencia al dato que queremos recuperar del archivo
 
-        diaSelecionat.get(ENTRADA).setText(prefe.getString(dia[0], "09:00"));
-        diaSelecionat.get(SORTIDA).setText(prefe.getString(dia[1], "15:25"));
-        diaSelecionat.get(TEMPS_NOEFEC).setText(prefe.getString(dia[2], "0.00"));
+        diaSelecionat.get(Constantes.ENTRADA).setText(prefe.getString(dia[0], "09:00"));
+        diaSelecionat.get(Constantes.SORTIDA).setText(prefe.getString(dia[1], "15:25"));
+        diaSelecionat.get(Constantes.TEMPS_NOEFEC).setText(prefe.getString(dia[2], "0.00"));
 
 
     }
@@ -1101,9 +1060,9 @@ public class MainActivity extends AppCompatActivity {
 
         String[] dia = listDiaSetmana.get(diaSetmana);
 
-        editor.putString(dia[0],diaSelecionat.get(ENTRADA).getText().toString());
-        editor.putString(dia[1],diaSelecionat.get(SORTIDA).getText().toString());
-        editor.putString(dia[2],diaSelecionat.get(TEMPS_NOEFEC).getText().toString());
+        editor.putString(dia[0],diaSelecionat.get(Constantes.ENTRADA).getText().toString());
+        editor.putString(dia[1],diaSelecionat.get(Constantes.SORTIDA).getText().toString());
+        editor.putString(dia[2],diaSelecionat.get(Constantes.TEMPS_NOEFEC).getText().toString());
 
         editor.apply();
 

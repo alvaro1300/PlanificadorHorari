@@ -270,4 +270,16 @@
         app:layout_constraintRight_toLeftOf="@+id/constraintLayout"
         android:layout_marginRight="8dp" />
 
+    <TextView
+        android:id="@+id/tvDifTemps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalSemana" />
+
 </android.support.constraint.ConstraintLayout>

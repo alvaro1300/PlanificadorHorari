@@ -166,7 +166,7 @@ public class HoresActivity extends AppCompatActivity {
 
         String resTotal = ERROR;
         boolean allDataOk = true;
-        Calendar calRes = stringToCalendar("00.00", TIME_FORMAT2);
+        Calendar calRes = Operacions.stringToCalendar("00.00", TIME_FORMAT2);
 
 
         for (int i = 0; i < limitDies; i++) {
@@ -186,14 +186,14 @@ public class HoresActivity extends AppCompatActivity {
         if (allDataOk){
             int dias = calRes.get(Calendar.DAY_OF_MONTH);
             int horas = calRes.get(Calendar.HOUR_OF_DAY);
-            String minutes = calendarToString(calRes, MINUTE_FORMAT);
+            String minutes = Operacions.calendarToString(calRes, MINUTE_FORMAT);
 
             resTotal = 24*(dias-1) + horas+"."+minutes;
         }
 
         return resTotal;
-    }
-*/
+    }*/
+
 
     public void bAccept(View v){
 
