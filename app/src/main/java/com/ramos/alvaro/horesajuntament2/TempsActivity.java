@@ -26,6 +26,7 @@ public class TempsActivity extends AppCompatActivity {
 
     public static final String STATE_HORAMINUTS = "horaMinuts";
     public static final String STATE_TEMPS_SETMANAL = "tempsSetmanal";
+    public static final String STATE_TEMPS_NOEFECT_VALIDACIO = "tempsNoEfectCorrecte";
 
 
 
@@ -55,6 +56,12 @@ public class TempsActivity extends AppCompatActivity {
     Calendar tempsBase;
     String tempsBaseString;
 
+    String totalDiaString;
+    String intervalEntSort;
+    String tipus; //Sirve para determinar si esta activity la ha llamado unos de los botones de noEfect o de efect
+    //y asi poder determinar si hay que restar el tiempo de pantalla al tiempo total semanal o sumarlo
+
+    Boolean tempsNoEfectCorrecte = true;
 
 
     @Override
@@ -64,6 +71,7 @@ public class TempsActivity extends AppCompatActivity {
         //Almacenar los strings que hayamos introducido en pantalla para que al girar la vista se vuelvan a cargar
         savedInstanceState.putString(STATE_HORAMINUTS, horaStringModificat);
         savedInstanceState.putString(STATE_TEMPS_SETMANAL, totalSemanaModificat);
+        savedInstanceState.putBoolean(STATE_TEMPS_NOEFECT_VALIDACIO, tempsNoEfectCorrecte);
 
 
 
@@ -74,6 +82,7 @@ public class TempsActivity extends AppCompatActivity {
         super.onRestoreInstanceState(recuperaEstado);
         horaStringModificat = recuperaEstado.getString(STATE_HORAMINUTS);
         totalSemanaModificat = recuperaEstado.getString(STATE_TEMPS_SETMANAL);
+        tempsNoEfectCorrecte = recuperaEstado.getBoolean(STATE_TEMPS_NOEFECT_VALIDACIO);
 
         ompleHoraMinuts(horaStringModificat);
         ompleTotalSetmana(totalSemanaModificat);
@@ -106,6 +115,8 @@ public class TempsActivity extends AppCompatActivity {
         Bundle bundle= getIntent().getExtras();
         horaStringOriginal = bundle.getString("tempsStringOriginal");
         totalSemanaOriginal = bundle.getString("totalSemanaStringOriginal");
+        tipus = bundle.getString("tipus");
+
 
         ompleHoraMinuts(horaStringOriginal);
         ompleTotalSetmana(totalSemanaOriginal);
@@ -114,6 +125,10 @@ public class TempsActivity extends AppCompatActivity {
         totalSemanaModificat = totalSemanaOriginal;
 
         tempsBaseString = determinarTempsBase();
+        if(tipus.equals(Constantes.TIPUS_NOEFECT)){
+            totalDiaString = bundle.getString(Constantes.TOTAL_DIA_STRING);
+            intervalEntSort = determinarIntervalEntSort();
+        }
 
 /*
         posHores = true;
@@ -157,36 +172,71 @@ public class TempsActivity extends AppCompatActivity {
     }
 
 
-    public void bAccept(View v){
-
-        String dataRetorn= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
 
 
-        Intent intent=new Intent();
-        intent.putExtra("temps", dataRetorn);
+    public String determinarIntervalEntSort(){
+        String ret;
 
-        setResult(RESULT_OK, intent);
-        finish();
+        Calendar intervalEntSortCal = Operacions.stringToCalendar(totalDiaString, Constantes.TIME_FORMAT2);
+
+        String minString = tvMinuts.getText().toString();
+        String horaString= tvHores.getText().toString();
+
+        int minResDia = Integer.parseInt(minString);
+        int horaResDia = Integer.parseInt(horaString);
+
+        int dias;
+        int horas;
+        String minutes;
+
+        intervalEntSortCal.add(Calendar.MINUTE, minResDia);
+        intervalEntSortCal.add(Calendar.HOUR_OF_DAY, horaResDia);
+
+        dias = intervalEntSortCal.get(Calendar.DAY_OF_MONTH);
+        horas = intervalEntSortCal.get(Calendar.HOUR_OF_DAY);
+        minutes = Operacions.calendarToString(intervalEntSortCal, Constantes.MINUTE_FORMAT);
+
+
+
+        ret = 24*(dias-1) + horas+"."+minutes;
+
+
+        return ret;
     }
-
 
     public String determinarTempsBase(){
         String ret;
 
         tempsBase = Operacions.stringToCalendar(totalSemanaOriginal, Constantes.TIME_FORMAT2);
 
-        String minString = tvHores.getText().toString();
-        String horaString= tvMinuts.getText().toString();
+        String minString = tvMinuts.getText().toString();
+        String horaString= tvHores.getText().toString();
 
         int minResDia = Integer.parseInt(minString);
         int horaResDia = Integer.parseInt(horaString);
 
-        tempsBase.add(Calendar.MINUTE, -minResDia);
-        tempsBase.add(Calendar.HOUR_OF_DAY, -horaResDia);
+        int dias=1;
+        int horas=1;
+        String minutes = "1";
 
-        int dias = tempsBase.get(Calendar.DAY_OF_MONTH);
-        int horas = tempsBase.get(Calendar.HOUR_OF_DAY);
-        String minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+        if (tipus.equals(Constantes.TIPUS_EFECT)){
+            tempsBase.add(Calendar.MINUTE, -minResDia);
+            tempsBase.add(Calendar.HOUR_OF_DAY, -horaResDia);
+
+            dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+            horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+            minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+        }else if (tipus.equals(Constantes.TIPUS_NOEFECT)){
+
+            tempsBase.add(Calendar.MINUTE, minResDia);
+            tempsBase.add(Calendar.HOUR_OF_DAY, horaResDia);
+
+            dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+            horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+            minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+        }
 
         ret = 24*(dias-1) + horas+"."+minutes;
 
@@ -197,30 +247,90 @@ public class TempsActivity extends AppCompatActivity {
 
     public String calcularTotalSetmana(){
 
-        String ret;
+        String ret=Constantes.ERROR;
 
         tempsBase = Operacions.stringToCalendar(tempsBaseString, Constantes.TIME_FORMAT2);
 
-        String minString = tvHores.getText().toString();
-        String horaString= tvMinuts.getText().toString();
+        String minString = tvMinuts.getText().toString();
+        String horaString= tvHores.getText().toString();
 
         int minResDia = Integer.parseInt(minString);
         int horaResDia = Integer.parseInt(horaString);
 
-        tempsBase.add(Calendar.MINUTE, minResDia);
-        tempsBase.add(Calendar.HOUR_OF_DAY, horaResDia);
+        int dias=1;
+        int horas=1;
+        String minutes = "1";
 
-        int dias = tempsBase.get(Calendar.DAY_OF_MONTH);
-        int horas = tempsBase.get(Calendar.HOUR_OF_DAY);
-        String minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
 
-        ret = 24*(dias-1) + horas+"."+minutes;
+        if (tipus.equals(Constantes.TIPUS_EFECT)){
 
+            tempsBase.add(Calendar.MINUTE, minResDia);
+            tempsBase.add(Calendar.HOUR_OF_DAY, horaResDia);
+
+            dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+            horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+            minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+            ret = 24*(dias-1) + horas+"."+minutes;
+
+
+        } else if (tipus.equals(Constantes.TIPUS_NOEFECT)){
+            double tempNoEfect = Double.parseDouble(tvHores.getText().toString()+"."+tvMinuts.getText().toString());
+            double tempsEfectDia = Double.parseDouble(intervalEntSort);
+
+            if(tempsEfectDia>=tempNoEfect){
+                tempsNoEfectCorrecte = true;
+                //btOk.setBackgroundColor(getResources().getColor(R.color.azulBotonOk));
+                //btOk.setTextColor();
+                btOk.setEnabled(true);
+
+                tempsBase.add(Calendar.MINUTE, -minResDia);
+                tempsBase.add(Calendar.HOUR_OF_DAY, -horaResDia);
+
+                dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+                horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+                minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+                ret = 24*(dias-1) + horas+"."+minutes;
+
+            } else {
+                tempsNoEfectCorrecte = false;
+                //btOk.setBackgroundColor(getResources().getColor(R.color.grisDeshabilitado));
+                //btOk.setTextColor(getResources().getColor(R.color.grisDeshabilitado));
+                //tvTotalSemana.setText(Constantes.ERROR);
+                btOk.setEnabled(false);
+                ret = Constantes.ERROR;
+            }
+        }
 
         return ret;
     }
 
 
+    public void fillEditText (String data, TextView tv){
+        tv.setText(data);
+
+    }
+
+
+
+    /* ----------------------------BOTONES-----------------------------------------*/
+
+    public void bAccept(View v){
+
+
+            String dataRetorn= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+
+            Intent intent=new Intent();
+            intent.putExtra("temps", dataRetorn);
+
+            setResult(RESULT_OK, intent);
+            finish();
+
+
+
+
+    }
 
 
     public void cancel (View v){
@@ -229,15 +339,8 @@ public class TempsActivity extends AppCompatActivity {
 
         setResult(RESULT_CANCELED, intent);
         finish();
-
-
-
     }
 
-    public void fillEditText (String data, TextView tv){
-        tv.setText(data);
-
-    }
 
     public void pressHores (View v){
 
@@ -273,10 +376,6 @@ public class TempsActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
 
 
     public void button1 (View v){

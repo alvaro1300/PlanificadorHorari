@@ -25,10 +25,10 @@ public class Constantes {
     public static String TIME_FORMAT2 = "HH.mm";
     public static String MINUTE_FORMAT = "mm";
 
-    public static int ENTRADA = 0;
-    public static int SORTIDA = 1;
-    public static int TEMPS_NOEFEC = 2;
-    public static int TOTAL_DIA = 3;
+    public static int POS_ENTRADA = 0;
+    public static int POS_SORTIDA = 1;
+    public static int POS_TEMPS_NOEFEC = 2;
+    public static int POS_TOTAL_DIA = 3;
 
     public static String ARXIU_DADES_MODEL = "dadesModel";
     public static String ARXIU_DADES1 = "dades";
@@ -38,4 +38,10 @@ public class Constantes {
     public static final String COLOR_NEGATIVO ="#ff3535";
     public static final String COLOR_ERROR ="#d1c4c4";
     public static final String COLOR_TEXTO_CLARO ="#c2c4c4";
+
+    public static final String TIPUS_EFECT ="tipusEfect";
+    public static final String TIPUS_NOEFECT ="tipusNoEfect";
+    public static final String TOTAL_DIA_STRING ="totalDia";
+
+
 }

@@ -10,4 +10,6 @@
     <color name="colorFindeResult">#5aaaaaaa</color>
     <color name="colorSeparador2">#e1f1f6</color>
     <color name="colorResult">#e1e1e1</color>
+    <color name="azulBotonOk">#0099cc</color>
+    <color name="grisDeshabilitado">#cae0e7</color>
 </resources>
