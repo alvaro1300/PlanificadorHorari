@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 } else {
-                    //System.out.println("La hora sortida no pot ser mes petita que hora entrada");
+                    // System.out.println("La hora sortida no pot ser mes petita que hora entrada");
 
                     Toast.makeText(this,"La hora de salida no se puede producir antes que la hora de entrada",Toast.LENGTH_LONG).show();
                 }
