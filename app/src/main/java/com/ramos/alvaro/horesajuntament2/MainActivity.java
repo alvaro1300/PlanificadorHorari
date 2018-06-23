@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TableRow;
@@ -85,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);*/
 
         listaResDia = new ArrayList<>();
         crearListDl();
