@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">Hores Ajuntament2</string>
+    <string name="app_name">Planificador</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_video">Vídeo</string>
+    <string name="title_foto">Foto</string>
+    <string name="title_main_activity">Galeria</string>
+    <string name="menu_done">Done</string>
+    <string name="add_item">Add item</string>
+    <string name="title_activity_show_foto">ShowFoto</string>
+    <string name="title_activity_show_video">ShowVideo</string>
+    <string name="error_foto">No es pot carregar la imatge</string>
+    <string name="permission_error">Error, has d\'acceptar el permís per poder contitnuar</string>
 </resources>
