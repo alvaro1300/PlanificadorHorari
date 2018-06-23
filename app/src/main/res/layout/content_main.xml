@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ramos.alvaro.horesajuntament2.MainActivity"
     tools:showIn="@layout/activity_main2">
 
@@ -158,11 +159,13 @@
                             android:checked="false"
                             android:onClick="bAccionFestiu"
                             android:textAlignment="center"
-                            app:buttonTint="@android:color/darker_gray"
+                            android:buttonTint="@android:color/darker_gray"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+
+                            /><!--app:buttonTint="@android:color/darker_gray"-->
                     </android.support.constraint.ConstraintLayout>
 
                 </TableRow>
@@ -235,7 +238,7 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:onClick="bAccionFestiu"
                         android:textAlignment="center"
-                        app:buttonTint="@android:color/darker_gray" />
+                        android:buttonTint="@android:color/darker_gray" />
                 </TableRow>
 
                 <TableRow
@@ -321,7 +324,7 @@
                             android:checked="false"
                             android:onClick="bAccionFestiu"
                             android:textAlignment="center"
-                            app:buttonTint="@android:color/darker_gray"
+                            android:buttonTint="@android:color/darker_gray"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -399,7 +402,7 @@
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:onClick="bAccionFestiu"
                         android:textAlignment="center"
-                        app:buttonTint="@android:color/darker_gray" />
+                        android:buttonTint="@android:color/darker_gray" />
                 </TableRow>
 
                 <TableRow
@@ -484,7 +487,7 @@
                             android:checked="false"
                             android:onClick="bAccionFestiu"
                             android:textAlignment="center"
-                            app:buttonTint="@android:color/darker_gray"
+                            android:buttonTint="@android:color/darker_gray"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -575,7 +578,7 @@
                             android:checked="false"
                             android:onClick="bAccionFestiu"
                             android:textAlignment="center"
-                            app:buttonTint="@android:color/darker_gray"
+                            android:buttonTint="@android:color/darker_gray"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -667,7 +670,7 @@
                             android:checked="false"
                             android:onClick="bAccionFestiu"
                             android:textAlignment="center"
-                            app:buttonTint="@android:color/darker_gray"
+                            android:buttonTint="@android:color/darker_gray"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toRightOf="parent"
@@ -729,8 +732,9 @@
         android:text="Desar"
         android:textColor="@android:color/background_light"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="9dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btCarregar" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/btCarregar"
+        app:layout_constraintRight_toLeftOf="@+id/btCarregar"
+        android:layout_marginRight="8dp" />
 
     <Button
         android:id="@+id/btCarregar"
@@ -749,7 +753,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        />
 
     <Button
         android:id="@+id/button3"
@@ -761,8 +765,8 @@
         android:text="Cap de setmana"
         android:textColor="@android:color/background_light"
         android:textSize="12sp"
-        tools:layout_editor_absoluteX="243dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintLeft_toRightOf="@+id/btCarregar"
+        android:layout_marginLeft="8dp" />
 
 </android.support.constraint.ConstraintLayout>
