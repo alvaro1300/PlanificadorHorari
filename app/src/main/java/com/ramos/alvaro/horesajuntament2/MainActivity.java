@@ -6,9 +6,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TableRow;
@@ -75,6 +78,43 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.cargar:
+                carregarDadesModel();
+                return true;
+            case R.id.mostar_finde:
+                switchFinde();
+                return true;
+            case R.id.action_settings:
+                //showHelp();
+                return true;
+            case R.id.ayuda:
+                //showHelp();
+                return true;
+            case R.id.acerca_de:
+                //showHelp();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +125,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        setContentView(R.layout.content_main);
+        setContentView(R.layout.activity_main2);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        this.setTitle(getString(R.string.title_main_activity));
+
 
         listaResDia = new ArrayList<>();
         crearListDl();
@@ -140,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
         }
 */
 
+        //Al llamar a este metodo conseguimos que el valor booleano de visibilidad
+        // que tenemos actualmente se traduzca graficamente en pantalla
+        visivilidadFinde();
         //Recorremos la listaSetmana que contiene los 7 dias de la semana con 4 valores por cada dia
         //Se limita el recorrido dependiendo si se esta mostrando el finde o no.
         for (int diaSetmana=0; diaSetmana<limitDies; diaSetmana++){
@@ -636,6 +682,19 @@ public class MainActivity extends AppCompatActivity {
         calcularTot();
     }
 
+    public void switchFinde(){
+        if (trDs.getVisibility()==View.GONE){
+            mostrarFinde();
+            verFinde = true;
+
+        } else {
+            ocultarFinde();
+            verFinde = false;
+
+        }
+        calcularTot();
+    }
+
 
     public void bAccionGuardarDadesModel(View v){
         guardarDades(Constantes.ARXIU_DADES_MODEL);
@@ -647,6 +706,11 @@ public class MainActivity extends AppCompatActivity {
         calcularTot();
     }
 
+    public void carregarDadesModel(){
+
+        carregarDades (Constantes.ARXIU_DADES_MODEL);
+        calcularTot();
+    }
 
    // public int obtenirDiaSetmana
 
