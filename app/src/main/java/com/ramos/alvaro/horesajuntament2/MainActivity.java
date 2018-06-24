@@ -144,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         this.setTitle(getString(R.string.title_main_activity));
-        carregarConfig (Constantes.ARXIU_CONFIG);
+
+        //carregarConfig (Constantes.ARXIU_CONFIG);
 
 
         listaResDia = new ArrayList<>();
@@ -182,7 +183,8 @@ public class MainActivity extends AppCompatActivity {
         carregarDades(Constantes.ARXIU_DADES1);
         visivilidadFinde();
         calcularTot();
-        cambiarColores ();
+        //ATENCION HE DESHABILITADO ESTO
+        // cambiarColores ();
 
 
     }
@@ -196,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
             limitDies=5;
         }
 */
+        carregarConfig (Constantes.ARXIU_CONFIG);
 
         //Al llamar a este metodo conseguimos que el valor booleano de visibilidad
         // que tenemos actualmente se traduzca graficamente en pantalla
@@ -472,6 +475,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         // Another activity is taking focus (this activity is about to be "paused").
         guardarDades (Constantes.ARXIU_DADES1);
+
 
     }
 
@@ -1241,14 +1245,15 @@ public class MainActivity extends AppCompatActivity {
 */
 
 
-    /*
+
     @Override
     protected void onResume() {
         super.onResume();
         // The activity has become visible (it is now "resumed").
-        carregarDades();
+        //carregarDades();
+        calcularTot();
     }
-*/
+
 
 
 

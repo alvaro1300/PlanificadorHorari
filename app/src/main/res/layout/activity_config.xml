@@ -51,7 +51,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/lyConfig_LimitHores"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="layoutConfigLimitSem">
 
         <TextView
             android:id="@+id/tvConfig_HorasSem"

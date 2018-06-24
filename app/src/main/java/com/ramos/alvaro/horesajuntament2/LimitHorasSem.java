@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by Alvaro on 24/06/2018.
@@ -146,10 +147,13 @@ public class LimitHorasSem extends AppCompatActivity {
     }
 
     public void ompleHoraMinuts (String valor){
+
         String hora;
         String min ;
-        tvDosPunts.setText(":");
-        String [] parts = valor.split(":");
+        tvDosPunts.setText(".");
+        String [] parts = valor.split(Pattern.quote("."));
+        int i = parts.length;
+
         hora = parts[0];
         min= parts[1];
 
@@ -197,20 +201,7 @@ public class LimitHorasSem extends AppCompatActivity {
     }*/
 
 
-    public void bAccept(View v){
 
-        String dataRetorn= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
-
-
-        Intent intent=new Intent();
-        intent.putExtra("temps", dataRetorn);
-
-        setResult(RESULT_OK, intent);
-        finish();
-
-
-
-    }
 
     public void fillEditText (String data, TextView tv){
         tv.setText(data);
@@ -253,7 +244,20 @@ public class LimitHorasSem extends AppCompatActivity {
 
     }
 
+    public void bAccept(View v){
 
+        String dataRetorn= tvHores.getText().toString()+"."+tvMinuts.getText().toString();
+
+
+        Intent intent=new Intent();
+        intent.putExtra("temps", dataRetorn);
+
+        setResult(RESULT_OK, intent);
+        finish();
+
+
+
+    }
 
     public void cancel (View v){
         String num1= "1";
@@ -381,7 +385,7 @@ public class LimitHorasSem extends AppCompatActivity {
         if (position == HORES){
             if (numero>maxHores){
                 //ret = value;
-                value = "23";
+                value = "99";
             }
 
         } else {

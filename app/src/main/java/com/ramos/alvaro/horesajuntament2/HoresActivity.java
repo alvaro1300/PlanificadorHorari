@@ -199,20 +199,7 @@ public class HoresActivity extends AppCompatActivity {
     }*/
 
 
-    public void bAccept(View v){
 
-        String dataRetorn= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
-
-
-        Intent intent=new Intent();
-        intent.putExtra("temps", dataRetorn);
-
-        setResult(RESULT_OK, intent);
-        finish();
-
-
-
-    }
 
     public void fillEditText (String data, TextView tv){
         tv.setText(data);
@@ -255,7 +242,20 @@ public class HoresActivity extends AppCompatActivity {
 
     }
 
+    public void bAccept(View v){
 
+        String dataRetorn= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+
+
+        Intent intent=new Intent();
+        intent.putExtra("temps", dataRetorn);
+
+        setResult(RESULT_OK, intent);
+        finish();
+
+
+
+    }
 
     public void cancel (View v){
         String num1= "1";

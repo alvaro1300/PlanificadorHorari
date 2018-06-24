@@ -42,7 +42,7 @@ public class Configuracion extends AppCompatActivity {
 
 
         Intent i = new Intent(this, LimitHorasSem.class);
-        i.putExtra("horaStringOriginal", tvSelString);
+        i.putExtra("horaStringOriginal", limitHorasSem);
 
         startActivityForResult(i,1);
 
@@ -76,7 +76,7 @@ public class Configuracion extends AppCompatActivity {
 
         }
 
-        guardarConfig(limitHorasSem);
+        guardarConfig(Constantes.ARXIU_CONFIG);
     }
 
 
