@@ -13,7 +13,7 @@ public class Constantes {
     public static final String TIME_VALUE_0 = "0.00";
     public static final String STATE_ID_VIEW = "idViewSelec";
 
-    public static final String LIMIT_HORES_SETMANA = "37.30";
+    public static final String LIMIT_HORES_SETMANA_DEF = "37.30";
     public static final String TEMPS_EFECTIU_DIA_FESTIU = "7.30";
     public static final String TEMPS_EFECTIU_DIA_DEFECTE = "7.30";
 
@@ -33,6 +33,9 @@ public class Constantes {
     public static String ARXIU_DADES_MODEL = "dadesModel";
     public static String ARXIU_DADES1 = "dades";
     public static String ARXIU_DADES_FESTIU = "dadesFestiu";
+    public static String ARXIU_CONFIG = "dadesConfig";
+
+    public static String ARXIU_TITOL_LIMIT_HORAS = "limitHorasSem";
 
     public static final String COLOR_POSITIVO = "#43f275";
     public static final String COLOR_NEGATIVO ="#ff3535";

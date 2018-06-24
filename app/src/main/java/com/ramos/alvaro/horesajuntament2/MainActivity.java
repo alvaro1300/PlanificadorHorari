@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     String hora;
     String tempsNoEfect;
     String tempsEfect = "7.21";
+    String limitHorasSem;
     int id;
     TextView itemSel;
     int limitDies;
@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         this.setTitle(getString(R.string.title_main_activity));
+        carregarConfig (Constantes.ARXIU_CONFIG);
 
 
         listaResDia = new ArrayList<>();
@@ -341,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat(Constantes.TIME_FORMAT2);
         try{
-            calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA));
+            calLimSetmana.setTime(sdf.parse(limitHorasSem));
             calTotalSetmana.setTime(sdf.parse(resTotal));
         } catch (ParseException ex) {
 
@@ -1070,6 +1071,17 @@ public class MainActivity extends AppCompatActivity {
         diaSelecionat.get(Constantes.POS_SORTIDA).setText(prefe.getString(dia[1], "15:25"));
         diaSelecionat.get(Constantes.POS_TEMPS_NOEFEC).setText(prefe.getString(dia[2], "0.00"));
 
+
+    }
+
+    public void carregarConfig (String arxiu) {
+        SharedPreferences prefe = getSharedPreferences(arxiu, Context.MODE_PRIVATE);
+
+        //List<TextView> diaSelecionat = listaSetmana.get(diaSetmana);//Esto es para los TExtVIew de pantalla
+
+        //String[] dia = listDiaSetmana.get(diaSetmana); //Esto es para poder indicar el String que hace referencia al dato que queremos recuperar del archivo
+
+        limitHorasSem = prefe.getString(Constantes.ARXIU_TITOL_LIMIT_HORAS, Constantes.LIMIT_HORES_SETMANA_DEF);
 
     }
 

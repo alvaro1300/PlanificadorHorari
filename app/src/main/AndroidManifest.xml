@@ -41,6 +41,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".LimitHorasSem">
+            android:parentActivityName=".Configuracion"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Configuracion" />
+        </activity>
     </application>
 
 </manifest>

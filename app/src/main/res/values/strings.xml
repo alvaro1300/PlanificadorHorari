@@ -24,4 +24,7 @@
 
     <string name="config_idioma">Idioma</string>
     <string name="config_idioma_expl">Establece el idioma de la aplicacion</string>
+
+
+    <string name="titulo_intro_limHorasSem">Límite de horas semanales</string>
 </resources>

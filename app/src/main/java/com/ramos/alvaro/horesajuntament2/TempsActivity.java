@@ -353,7 +353,7 @@ public class TempsActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat(Constantes.TIME_FORMAT2);
         try{
-            calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA));
+            calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA_DEF));
             calTotalSetmana.setTime(sdf.parse(resTotal));
         } catch (ParseException ex) {
 
