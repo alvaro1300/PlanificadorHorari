@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 //showHelp();
+                layoutConfig();
                 return true;
             case R.id.ayuda:
                 //showHelp();
@@ -116,6 +117,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void layoutConfig(){
+
+
+        Intent i = new Intent(this, Configuracion.class);
+        startActivity(i);
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        /*
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         this.setTitle(getString(R.string.title_main_activity));
 

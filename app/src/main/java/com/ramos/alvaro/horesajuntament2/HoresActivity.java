@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -84,6 +85,9 @@ public class HoresActivity extends AppCompatActivity {
         }
 */
         setContentView(R.layout.activity_introhores);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvHores=(TextView)findViewById(R.id.tvHores);
         tvMinuts=(TextView)findViewById(R.id.tvMinuts);

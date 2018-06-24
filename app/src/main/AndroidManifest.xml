@@ -20,10 +20,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HoresActivity">
-            android:theme="@style/AppTheme.NoActionBar"
+        <activity
+            android:name=".HoresActivity">
+            android:parentActivityName=".MainActivity"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
-        <activity android:name=".TempsActivity"></activity>
+        <activity
+            android:name=".TempsActivity">
+            android:parentActivityName=".MainActivity"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".Configuracion">
+            android:parentActivityName=".MainActivity"
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>

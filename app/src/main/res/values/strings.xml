@@ -14,4 +14,14 @@
     <string name="acerca_de">Acerca de PHS</string>
     <string name="ayuda">Ayuda</string>
     <string name="mostrar_finde">Mostrar/Ocultar fin de semana</string>
+
+    <string name="config_crear_horario_model">Crear horario modelo</string>
+    <string name="cofing_crear_horario_model_expl">Crea un horario modelo. Este será el horario base sobre el cual
+        podrás realizar modificaciones para realizar tu planificación semanal</string>
+
+    <string name="config_horas_semanal">Límite de horas semanales</string>
+    <string name="config_horas_semanal_expl">Establece el máximo de horas semanales efectivas que quieres realizar</string>
+
+    <string name="config_idioma">Idioma</string>
+    <string name="config_idioma_expl">Establece el idioma de la aplicacion</string>
 </resources>

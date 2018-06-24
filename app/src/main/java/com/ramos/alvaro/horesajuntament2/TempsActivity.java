@@ -99,6 +99,9 @@ public class TempsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_introhores);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         tvHores=(TextView)findViewById(R.id.tvHores);
         tvMinuts=(TextView)findViewById(R.id.tvMinuts);
         tvDosPunts=(TextView)findViewById(R.id.tvDosPunts);
