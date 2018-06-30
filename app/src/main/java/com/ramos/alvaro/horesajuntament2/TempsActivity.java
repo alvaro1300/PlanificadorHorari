@@ -43,6 +43,7 @@ public class TempsActivity extends AppCompatActivity {
     private List<TextView> itemTime = new ArrayList<TextView>();
     private int position;
     private int posInterna;
+    private String limitHorasSemana;
     boolean posHores;
     boolean posMinuts;
     /*
@@ -123,6 +124,7 @@ public class TempsActivity extends AppCompatActivity {
         Bundle bundle= getIntent().getExtras();
         horaStringOriginal = bundle.getString("tempsStringOriginal");
         totalSemanaOriginal = bundle.getString("totalSemanaStringOriginal");
+        limitHorasSemana = bundle.getString("limitHorasSemana");
         tipus = bundle.getString("tipus");
 
 
@@ -353,7 +355,9 @@ public class TempsActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat(Constantes.TIME_FORMAT2);
         try{
-            calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA_DEF));
+            //String limitHorasSem = prefe.getString(Constantes.ARXIU_TITOL_LIMIT_HORAS, Constantes.LIMIT_HORES_SETMANA_DEF);
+            //calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA_DEF));
+            calLimSetmana.setTime(sdf.parse(limitHorasSemana));
             calTotalSetmana.setTime(sdf.parse(resTotal));
         } catch (ParseException ex) {
 

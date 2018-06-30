@@ -180,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         tvDiferencia = (TextView)findViewById(R.id.tvDiferencia);
 
 
+        //carregarConfig (Constantes.ARXIU_CONFIG);
         carregarDades(Constantes.ARXIU_DADES1);
         visivilidadFinde();
         calcularTot();
@@ -528,6 +529,31 @@ public class MainActivity extends AppCompatActivity {
         return diaSetmana;
     }
 
+
+    /**
+     * Trobar tipus de dada (entrada, sortida, noEfect o Efect) en funció del textView clickat
+     * @param v
+     * @return
+     */
+    public int trobarTipusDadaDiaPerTextViewClicat (View v){
+        int tipusDada=0;
+        for (int i=0; i<limitDies;i++){
+            List<TextView> listaValoresDia = listaSetmana.get(i);
+
+            //recorremos la lista de valores de ese dia. Cada dia tiene 4 valores (entrada,salida, noEfect,efect)
+            for (int j=0; j<4; j++) {
+                if (v.getId() == itemSel.getId()) {
+                    tipusDada = j;
+                    i = limitDies; // ponemos esto para salir del bucle principal
+                    break;
+                }
+            }
+        }
+        return tipusDada;
+    }
+
+
+
     public int trobarDiaSetPerTextViewClicat (int id){
         int diaSetmana=0;
         for (int i=0; i<limitDies;i++){
@@ -551,8 +577,17 @@ public class MainActivity extends AppCompatActivity {
     public void bAccionEntSort(View v){
 
 
-        //Obtenemos el dia de la semana para poder encontrar su CheckBox correspondiente
+        //Obtenemos el dia de la semana para poder encontrar su CheckBox correspondiente y tambien todos los valores de su linea(DIA)
         int diaSetmana = trobarDiaSetPerTextViewClicat(v);
+        //Obtenemos si el textView es entrada o salida
+        int tipusDada = trobarTipusDadaDiaPerTextViewClicat(v);
+        String tipus="";
+        if(tipusDada==Constantes.POS_ENTRADA){
+            tipus=Constantes.TIPUS_ENTRADA;
+        } else if (tipusDada==Constantes.POS_SORTIDA){
+            tipus = Constantes.TIPUS_SALIDA;
+        }
+
 
         //Obtenemos el objeto CheckBox en funcion del dia de la semana
         CheckBox checkBoxDelDia = listaCheckBoxFestius.get(diaSetmana);
@@ -565,6 +600,8 @@ public class MainActivity extends AppCompatActivity {
         String tvSelString = tvSel.getText().toString();
         String totalSemana = tvResult.getText().toString();
 
+        List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
+
         if (!checked){
             if(!tvSelString.equals(Constantes.NOVALUE)){
 
@@ -574,10 +611,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(this, HoresActivity.class);
                 i.putExtra("horaStringOriginal", tvSelString);
                 i.putExtra("totalSemanaStringOriginal", totalSemana);
+                i.putExtra("entrada", listaValorsDia.get(Constantes.POS_ENTRADA).getText().toString());
+                i.putExtra("sortida", listaValorsDia.get(Constantes.POS_SORTIDA).getText().toString());
+                i.putExtra("noEfect", listaValorsDia.get(Constantes.POS_TEMPS_NOEFEC).getText().toString());
+                i.putExtra("limitHorasSemana", limitHorasSem);
+                i.putExtra("tipus", tipus);
 
                 startActivityForResult(i,1);
             } else {
-                List<TextView> listaValorsDia = listaSetmana.get(diaSetmana);
+
                 listaValorsDia.get(Constantes.POS_ENTRADA).setText(Constantes.HORA_ENT_DEFECTE);
                 listaValorsDia.get(Constantes.POS_SORTIDA).setText(Constantes.HORA_SORT_DEFECTE);
                 listaValorsDia.get(Constantes.POS_TEMPS_NOEFEC).setText(Constantes.NOVALUE);
@@ -616,6 +658,7 @@ public class MainActivity extends AppCompatActivity {
                 i.putExtra("totalSemanaStringOriginal", totalSemana);
                 i.putExtra("tipus", Constantes.TIPUS_NOEFECT);
                 i.putExtra("totalDia", listaSetmana.get(diaSetmana).get(Constantes.POS_TOTAL_DIA).getText().toString());
+                i.putExtra("limitHorasSemana", limitHorasSem);
 
                 startActivityForResult(i,2);
 
@@ -637,6 +680,7 @@ public class MainActivity extends AppCompatActivity {
                     i.putExtra("totalSemanaStringOriginal", totalSemana);
                     i.putExtra("tipus", Constantes.TIPUS_NOEFECT);
                     i.putExtra("totalDia", listaSetmana.get(diaSetmana).get(Constantes.POS_TOTAL_DIA).getText().toString());
+                    i.putExtra("limitHorasSemana", limitHorasSem);
                     startActivityForResult(i,2);
                 }
 
@@ -678,6 +722,7 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("tempsStringOriginal", tvSelString);
             i.putExtra("totalSemanaStringOriginal", totalSemana);
             i.putExtra("tipus", Constantes.TIPUS_EFECT);
+            i.putExtra("limitHorasSemana", limitHorasSem);
 
             startActivityForResult(i,3);
 

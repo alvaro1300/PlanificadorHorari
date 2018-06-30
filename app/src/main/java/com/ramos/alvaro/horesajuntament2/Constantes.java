@@ -44,6 +44,8 @@ public class Constantes {
 
     public static final String TIPUS_EFECT ="tipusEfect";
     public static final String TIPUS_NOEFECT ="tipusNoEfect";
+    public static final String TIPUS_ENTRADA ="tipusEntrada";
+    public static final String TIPUS_SALIDA ="tipusSalida";
     public static final String TOTAL_DIA_STRING ="totalDia";
 
 
