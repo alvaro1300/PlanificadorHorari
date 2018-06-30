@@ -48,6 +48,10 @@ public class HoresActivity extends AppCompatActivity {
     String horaStringModificat=null;
     String totalSemanaOriginal;
     String totalSemanaModificat=null;
+    String entrada, salida, noEfect, efect, limitHorasSem, tipus;
+
+    boolean correcte = true;
+
 
 
     @Override
@@ -108,8 +112,17 @@ public class HoresActivity extends AppCompatActivity {
 
 
         Bundle bundle= getIntent().getExtras();
+
         horaStringOriginal = bundle.getString("horaStringOriginal");
         totalSemanaOriginal = bundle.getString("totalSemanaStringOriginal");
+        entrada = bundle.getString("entrada");
+        salida = bundle.getString("salida");
+        noEfect = bundle.getString("noEfect");
+        efect =  bundle.getString("efect");
+        limitHorasSem =  bundle.getString("limitHorasSemana");
+        tipus =  bundle.getString("tipus");
+
+
 
         /*if (horaStringModificat!=null){
             ompleHoraMinuts(horaStringModificat);
@@ -152,6 +165,7 @@ public class HoresActivity extends AppCompatActivity {
         String min ;
         tvDosPunts.setText(":");
         String [] parts = valor.split(":");
+
         hora = parts[0];
         min= parts[1];
 
@@ -200,6 +214,15 @@ public class HoresActivity extends AppCompatActivity {
 
 
 
+    public void comprobarEntrSalida(){
+
+        String entrada = ;
+        String salida;
+
+
+
+
+    }
 
     public void fillEditText (String data, TextView tv){
         tv.setText(data);

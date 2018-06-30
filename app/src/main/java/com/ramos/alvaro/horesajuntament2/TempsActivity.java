@@ -67,7 +67,7 @@ public class TempsActivity extends AppCompatActivity {
     String tipus; //Sirve para determinar si esta activity la ha llamado unos de los botones de noEfect o de efect
     //y asi poder determinar si hay que restar el tiempo de pantalla al tiempo total semanal o sumarlo
 
-    Boolean tempsNoEfectCorrecte = true;
+    Boolean tempsNoEfectCorrecte = true; //Sirve para poder detectar si hay que habilitar o no el boton de "OK" en funcion de si el tiempo introducido tiene logica
 
 
     @Override
