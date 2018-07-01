@@ -2,7 +2,13 @@
     <string name="app_name">Planificador</string>
     <string name="title_video">Vídeo</string>
     <string name="title_foto">Foto</string>
+
     <string name="title_main_activity">Planificador Semanal</string>
+    <string name="title_hores_activity_entrada">Hora de entrada</string>
+    <string name="title_hores_activity_salida">Hora de salida</string>
+    <string name="title_temps_activity_noefect">Horas no efectivas</string>
+    <string name="title_temps_activity_efect">Horas efectivas día</string>
+
     <string name="menu_done">Done</string>
     <string name="add_item">Add item</string>
     <string name="title_activity_show_foto">ShowFoto</string>

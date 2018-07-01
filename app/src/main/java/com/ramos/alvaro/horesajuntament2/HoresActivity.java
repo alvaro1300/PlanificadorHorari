@@ -139,6 +139,12 @@ public class HoresActivity extends AppCompatActivity {
         limitHorasSemana =  bundle.getString("limitHorasSemana");
         tipus =  bundle.getString("tipus");
 
+        if (tipus.equals(Constantes.TIPUS_ENTRADA)){
+            this.setTitle(getString(R.string.title_hores_activity_entrada));
+        } else if (tipus.equals(Constantes.TIPUS_SALIDA)){
+            this.setTitle(getString(R.string.title_hores_activity_salida));
+        }
+
 
         ompleHoraMinuts(horaStringOriginal);
         ompleTotalSetmana(totalSemanaOriginal);
