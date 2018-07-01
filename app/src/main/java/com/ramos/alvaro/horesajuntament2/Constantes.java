@@ -35,7 +35,7 @@ public class Constantes {
     public static String ARXIU_DADES_FESTIU = "dadesFestiu";
     public static String ARXIU_CONFIG = "dadesConfig";
 
-    public static String ARXIU_TITOL_LIMIT_HORAS = "limitHorasSem";
+    public static String ARXIU_TITOL_LIMIT_HORAS = "limitHorasSemana";
 
     public static final String COLOR_POSITIVO = "#43f275";
     public static final String COLOR_NEGATIVO ="#ff3535";

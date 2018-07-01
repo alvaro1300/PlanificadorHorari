@@ -2,17 +2,19 @@ package com.ramos.alvaro.horesajuntament2;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * Created by Alvaro on 02/06/2018.
@@ -27,10 +29,13 @@ public class HoresActivity extends AppCompatActivity {
 
     public static final String STATE_HORAMINUTS = "horaMinuts";
     public static final String STATE_TEMPS_SETMANAL = "tempsSetmanal";
+    public static final String STATE_TEMPS_NOEFECT_VALIDACIO = "tempsPantallaCorrecte";
+
+    String colorAplicado = Constantes.COLOR_ERROR;
 
 
 
-    private TextView tvHores, tvMinuts, tvDosPunts;
+    private TextView tvHores, tvMinuts, tvDosPunts, tvDifTemps;
     private TextView tvTotalSemana;
     private Button btCancel, btOk, bt1, bt2,bt3, bt4 ,bt5, bt6, bt7, bt8, bt9;
     private TextView tvFocus = tvHores;
@@ -48,9 +53,16 @@ public class HoresActivity extends AppCompatActivity {
     String horaStringModificat=null;
     String totalSemanaOriginal;
     String totalSemanaModificat=null;
-    String entrada, salida, noEfect, efect, limitHorasSem, tipus;
+    String entrada, salida, noEfect, efect, limitHorasSemana, tipus;
 
     boolean correcte = true;
+
+    Calendar tempsBase;
+    String tempsBaseString;
+
+    int horaPantallaInt;
+
+    Boolean tempsPantallaCorrecte = true; //Sirve para poder detectar si hay que habilitar o no el boton de "OK" en funcion de si el tiempo introducido tiene logica
 
 
 
@@ -61,6 +73,7 @@ public class HoresActivity extends AppCompatActivity {
         //Almacenar los strings que hayamos introducido en pantalla para que al girar la vista se vuelvan a cargar
         savedInstanceState.putString(STATE_HORAMINUTS, horaStringModificat);
         savedInstanceState.putString(STATE_TEMPS_SETMANAL, totalSemanaModificat);
+        savedInstanceState.putBoolean(STATE_TEMPS_NOEFECT_VALIDACIO, tempsPantallaCorrecte);
 
 
 
@@ -71,9 +84,10 @@ public class HoresActivity extends AppCompatActivity {
         super.onRestoreInstanceState(recuperaEstado);
         horaStringModificat = recuperaEstado.getString(STATE_HORAMINUTS);
         totalSemanaModificat = recuperaEstado.getString(STATE_TEMPS_SETMANAL);
+        tempsPantallaCorrecte= recuperaEstado.getBoolean(STATE_TEMPS_NOEFECT_VALIDACIO);
 
         ompleHoraMinuts(horaStringModificat);
-        //ompleTotalSetmana(totalSemanaModificat);
+        ompleTotalSetmana(totalSemanaModificat);
     }
 
 
@@ -97,6 +111,7 @@ public class HoresActivity extends AppCompatActivity {
         tvMinuts=(TextView)findViewById(R.id.tvMinuts);
         tvDosPunts=(TextView)findViewById(R.id.tvDosPunts);
         tvTotalSemana=(TextView)findViewById(R.id.tvTotalSemana);
+        tvDifTemps=(TextView)findViewById(R.id.tvDifTemps);
 
         btOk=(Button)findViewById(R.id.btOk);
         btCancel=(Button)findViewById(R.id.btCancel);
@@ -112,36 +127,24 @@ public class HoresActivity extends AppCompatActivity {
 
 
         Bundle bundle= getIntent().getExtras();
-
         horaStringOriginal = bundle.getString("horaStringOriginal");
         totalSemanaOriginal = bundle.getString("totalSemanaStringOriginal");
         entrada = bundle.getString("entrada");
         salida = bundle.getString("salida");
         noEfect = bundle.getString("noEfect");
         efect =  bundle.getString("efect");
-        limitHorasSem =  bundle.getString("limitHorasSemana");
+        limitHorasSemana =  bundle.getString("limitHorasSemana");
         tipus =  bundle.getString("tipus");
 
 
+        ompleHoraMinuts(horaStringOriginal);
+        ompleTotalSetmana(totalSemanaOriginal);
 
-        /*if (horaStringModificat!=null){
-            ompleHoraMinuts(horaStringModificat);
-            ompleTotalSetmana(totalSemanaModificat);
+        horaStringModificat = horaStringOriginal;
+        totalSemanaModificat = totalSemanaOriginal;
 
-        } else {
-        */
-            ompleHoraMinuts(horaStringOriginal);
-            ompleTotalSetmana(totalSemanaOriginal);
 
-            horaStringModificat = horaStringOriginal;
-            totalSemanaModificat = totalSemanaOriginal;
-       // }
-
-        //horaStringModificat = horaStringOriginal;
-        //totalSemanaModificat = totalSemanaOriginal;
-        //ompleHoraMinuts(horaStringModificat);
-        //ompleTotalSetmana(totalSemanaModificat);
-
+        tempsBaseString = determinarTempsBase();
 
         posHores = true;
         posMinuts = true;
@@ -158,6 +161,188 @@ public class HoresActivity extends AppCompatActivity {
         valueMin = "00";
         value = "00";
 
+        String diferencia = calcularDiferencia(totalSemanaModificat);
+        tvDifTemps.setText(diferencia);
+
+    }
+
+    public void calcularTot() {
+        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        totalSemanaModificat=calcularTotalSetmana();
+        tvTotalSemana.setText(totalSemanaModificat);
+
+
+        if (totalSemanaModificat.equalsIgnoreCase(Constantes.ERROR)){
+            tvDifTemps.setText("");
+            colorAplicado = Constantes.COLOR_ERROR;
+
+        }else {
+            String diferencia = calcularDiferencia(totalSemanaModificat);
+            tvDifTemps.setText(diferencia);
+
+        }
+
+        cambiarColores ();
+
+
+    }
+
+
+    public String calcularDiferencia (String resTotal){
+        String diferencia;
+        Calendar calLimSetmana = Calendar.getInstance();
+        Calendar calTotalSetmana = Calendar.getInstance();
+
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.TIME_FORMAT2);
+        try{
+            //String limitHorasSemana = prefe.getString(Constantes.ARXIU_TITOL_LIMIT_HORAS, Constantes.LIMIT_HORES_SETMANA_DEF);
+            //calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA_DEF));
+            calLimSetmana.setTime(sdf.parse(limitHorasSemana));
+            calTotalSetmana.setTime(sdf.parse(resTotal));
+        } catch (ParseException ex) {
+
+            //System.out.println("Error al convertir de string a calendar: " + data);
+        }
+
+        diferencia = convDifCalToTemps(calLimSetmana, calTotalSetmana);
+
+
+        return diferencia;
+    }
+
+
+    public String convDifCalToTemps (Calendar calLimSetmana, Calendar calTotalSetmana){
+        String temps;
+
+
+        long millisLimSet = calLimSetmana.getTimeInMillis();
+        long millisTotSet = calTotalSetmana.getTimeInMillis();
+
+        Calendar difCal = Calendar.getInstance();
+
+        int comparacio = calTotalSetmana.compareTo(calLimSetmana);
+
+
+        long diff = millisTotSet - millisLimSet;
+
+
+        difCal.setTimeInMillis(Math.abs(diff));
+        long millisdifCal = difCal.getTimeInMillis();
+
+
+        difCal.add(Calendar.HOUR_OF_DAY,-1);
+
+
+        int dia = difCal.get(Calendar.DAY_OF_MONTH);
+
+        int hora = difCal.get(Calendar.HOUR_OF_DAY);
+
+        String minutes = Operacions.calendarToString(difCal, Constantes.MINUTE_FORMAT);
+
+        int horasDif = 24*(dia-1) + hora;
+
+
+        if(diff == 0L){
+            temps = "0.00";
+            colorAplicado = Constantes.COLOR_POSITIVO;
+        } else if (diff>0L){
+
+            colorAplicado = Constantes.COLOR_POSITIVO;
+            temps = "+"+String.valueOf(horasDif)+"."+minutes;
+
+        } else {
+            colorAplicado = Constantes.COLOR_NEGATIVO;
+            temps = "-"+String.valueOf(horasDif)+"."+minutes;
+
+        }
+
+        return temps;
+    }
+
+    /**
+     * Metodo para transformar un String con formato hh:mm a hh.mm y asi poderlo convertir a double sin problemas
+     * @param horaConFormatDosPunts
+     * @return
+     */
+    public String convertirStringDosPuntsAStringPunt (String horaConFormatDosPunts){
+
+        String hora;
+        String min ;
+        String [] parts = horaConFormatDosPunts.split(":");
+        hora = parts[0];
+        min= parts[1];
+
+        return hora + "." + min;
+
+    }
+
+    public String calcularTotalSetmana(){
+
+        String ret=Constantes.ERROR;
+
+        tempsBase = Operacions.stringToCalendar(tempsBaseString, Constantes.TIME_FORMAT2);
+
+        String minString = tvMinuts.getText().toString();
+        String horaString= tvHores.getText().toString();
+
+        int minResDia = Integer.parseInt(minString);
+        int horaResDia = Integer.parseInt(horaString);
+
+        int dias=1;
+        int horas=1;
+        String minutes = "1";
+
+
+        Calendar entradaCal = Operacions.stringToCalendar(entrada, Constantes.TIME_FORMAT);
+        Calendar diferenciaEntreEntSort = Operacions.stringToCalendar(salida, Constantes.TIME_FORMAT);
+        diferenciaEntreEntSort.add(Calendar.MINUTE, -entradaCal.get(Calendar.MINUTE));
+        diferenciaEntreEntSort.add(Calendar.HOUR_OF_DAY, -entradaCal.get(Calendar.HOUR_OF_DAY));
+
+
+        if (tipus.equals(Constantes.TIPUS_ENTRADA)) {
+
+            //Si estamos estableciendo la hora Entrada, comprovamos que la hora de pantalla no sea mayor que la hora de Salida
+            Double tempsHoraEntrada = Double.parseDouble(tvHores.getText().toString() + "." + tvMinuts.getText().toString());
+            Double tempsHoraSalida = Double.parseDouble(convertirStringDosPuntsAStringPunt(salida));
+            if (tempsHoraEntrada < tempsHoraSalida) {
+                tempsPantallaCorrecte = true;
+                btOk.setEnabled(true);
+
+            } else {
+                tempsPantallaCorrecte = false;
+                btOk.setEnabled(false);
+                ret = Constantes.ERROR;
+            }
+        }
+
+        if (tipus.equals(Constantes.TIPUS_SALIDA)) {
+
+            //Si estamos estableciendo la entrada, comprovamos que la hora de pantalla no sea mayor que la hora de salida
+            Double tempsHoraSalida = Double.parseDouble(tvHores.getText().toString() + "." + tvMinuts.getText().toString());
+            Double tempsHoraEntrada = Double.parseDouble(convertirStringDosPuntsAStringPunt(entrada));
+            if (tempsHoraSalida > tempsHoraEntrada) {
+                tempsPantallaCorrecte = true;
+                btOk.setEnabled(true);
+
+            } else {
+                tempsPantallaCorrecte = false;
+                btOk.setEnabled(false);
+                ret = Constantes.ERROR;
+            }
+        }
+
+        //Si la hora introducida es correcta, entonces hacemos los calculos
+        if(tempsPantallaCorrecte) {
+            tempsBase.add(Calendar.MINUTE, diferenciaEntreEntSort.get(Calendar.MINUTE));
+            tempsBase.add(Calendar.HOUR_OF_DAY,diferenciaEntreEntSort.get(Calendar.HOUR_OF_DAY));
+
+            dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+            horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+            minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+            ret = 24*(dias-1) + horas+"."+minutes;
+        }
+        return ret;
     }
 
     public void ompleHoraMinuts (String valor){
@@ -179,50 +364,47 @@ public class HoresActivity extends AppCompatActivity {
         tvTotalSemana.setText(valor);
     }
 
-    /*
-    public String calcularTotalSetmana(){
-
-        String resTotal = ERROR;
-        boolean allDataOk = true;
-        Calendar calRes = Operacions.stringToCalendar("00.00", TIME_FORMAT2);
-
-
-        for (int i = 0; i < limitDies; i++) {
-            String resDia= listaResDia.get(i).getText().toString();
-            if (resDia.equalsIgnoreCase(ERROR)){
-                allDataOk = false;
-            } else {
-                String[] arrayResDia = resDia.split(Pattern.quote("."));
-                int minResDia = Integer.parseInt(arrayResDia[1]);
-                int horaResDia = Integer.parseInt(arrayResDia[0]);
-
-                calRes.add(Calendar.MINUTE, minResDia);
-                calRes.add(Calendar.HOUR_OF_DAY, horaResDia);
-            }
-        }
-
-        if (allDataOk){
-            int dias = calRes.get(Calendar.DAY_OF_MONTH);
-            int horas = calRes.get(Calendar.HOUR_OF_DAY);
-            String minutes = Operacions.calendarToString(calRes, MINUTE_FORMAT);
-
-            resTotal = 24*(dias-1) + horas+"."+minutes;
-        }
-
-        return resTotal;
-    }*/
-
-
-
-    public void comprobarEntrSalida(){
-
-        String entrada = ;
-        String salida;
 
 
 
 
+    /**
+     * Encontramos el total de la semana base al que le sumaremos posteriormente las horas de ese dia
+     * @return
+     */
+    public String determinarTempsBase(){
+        String ret;
+
+        tempsBase = Operacions.stringToCalendar(totalSemanaOriginal, Constantes.TIME_FORMAT2);
+
+
+        int dias=1;
+        int horas=1;
+        String minutes = "1";
+
+        //Encuentro la diferencia de tiempo en Calendar entre la hora de entrada y la hora de salida
+        Calendar entradaCal = Operacions.stringToCalendar(entrada, Constantes.TIME_FORMAT);
+
+        Calendar diferenciaEntreEntSort = Operacions.stringToCalendar(salida, Constantes.TIME_FORMAT);
+        diferenciaEntreEntSort.add(Calendar.MINUTE, -entradaCal.get(Calendar.MINUTE));
+        diferenciaEntreEntSort.add(Calendar.HOUR_OF_DAY, -entradaCal.get(Calendar.HOUR_OF_DAY));
+
+        //Resto la diferencia de tiempo en Calendar al tempsBase para encontrar el tempBase de verdad
+        tempsBase.add(Calendar.MINUTE, -diferenciaEntreEntSort.get(Calendar.MINUTE));
+        tempsBase.add(Calendar.HOUR_OF_DAY, -diferenciaEntreEntSort.get(Calendar.HOUR_OF_DAY));
+
+        //Obtengo los dias, horas i minutos del tiempo base
+        dias = tempsBase.get(Calendar.DAY_OF_MONTH);
+        horas = tempsBase.get(Calendar.HOUR_OF_DAY);
+        minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
+
+        ret = 24*(dias-1) + horas+"."+minutes;
+
+
+        return ret;
     }
+
+
 
     public void fillEditText (String data, TextView tv){
         tv.setText(data);
@@ -265,6 +447,28 @@ public class HoresActivity extends AppCompatActivity {
 
     }
 
+
+    public void cambiarColores (){
+        //Cambiar el color del tvResult
+        int color = Color.parseColor(colorAplicado);
+        Drawable background = tvTotalSemana.getBackground();
+
+
+        if (background instanceof GradientDrawable) {
+            // cast to 'GradientDrawable'
+            GradientDrawable gradientDrawable = (GradientDrawable) background;
+            gradientDrawable.setColor(color);
+        }
+
+
+    }
+
+
+
+
+     /* ----------------------------BOTONES-----------------------------------------*/
+
+
     public void bAccept(View v){
 
         String dataRetorn= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
@@ -281,9 +485,10 @@ public class HoresActivity extends AppCompatActivity {
     }
 
     public void cancel (View v){
-        String num1= "1";
+        Intent intent=new Intent();
 
-
+        setResult(RESULT_CANCELED, intent);
+        finish();
 
 
     }
@@ -292,7 +497,8 @@ public class HoresActivity extends AppCompatActivity {
     public void button1 (View v){
         String num = "1";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        //horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
 
     }
 
@@ -300,55 +506,63 @@ public class HoresActivity extends AppCompatActivity {
     public void button2 (View v){
         String num = "2";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
     public void button3 (View v){
         String num = "3";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+
     }
 
     public void button4 (View v){
         String num = "4";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
     public void button5 (View v){
         String num = "5";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
     public void button6 (View v){
         String num = "6";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
     public void button7 (View v){
         String num = "7";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
     public void button8 (View v){
         String num = "8";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
     public void button9 (View v){
         String num = "9";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
     public void button0 (View v){
         String num = "0";
         accionButton(num);
-        horaStringModificat= tvHores.getText().toString()+":"+tvMinuts.getText().toString();
+        calcularTot();
+
     }
 
 

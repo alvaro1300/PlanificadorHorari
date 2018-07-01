@@ -30,7 +30,7 @@ public class TempsActivity extends AppCompatActivity {
 
     public static final String STATE_HORAMINUTS = "horaMinuts";
     public static final String STATE_TEMPS_SETMANAL = "tempsSetmanal";
-    public static final String STATE_TEMPS_NOEFECT_VALIDACIO = "tempsNoEfectCorrecte";
+    public static final String STATE_TEMPS_NOEFECT_VALIDACIO = "tempsPantallaCorrecte";
 
 
 
@@ -135,6 +135,7 @@ public class TempsActivity extends AppCompatActivity {
         totalSemanaModificat = totalSemanaOriginal;
 
         tempsBaseString = determinarTempsBase();
+
         if(tipus.equals(Constantes.TIPUS_NOEFECT)){
             totalDiaString = bundle.getString(Constantes.TOTAL_DIA_STRING);
             intervalEntSort = determinarIntervalEntSort();
@@ -355,7 +356,7 @@ public class TempsActivity extends AppCompatActivity {
 
         SimpleDateFormat sdf = new SimpleDateFormat(Constantes.TIME_FORMAT2);
         try{
-            //String limitHorasSem = prefe.getString(Constantes.ARXIU_TITOL_LIMIT_HORAS, Constantes.LIMIT_HORES_SETMANA_DEF);
+            //String limitHorasSemana = prefe.getString(Constantes.ARXIU_TITOL_LIMIT_HORAS, Constantes.LIMIT_HORES_SETMANA_DEF);
             //calLimSetmana.setTime(sdf.parse(Constantes.LIMIT_HORES_SETMANA_DEF));
             calLimSetmana.setTime(sdf.parse(limitHorasSemana));
             calTotalSetmana.setTime(sdf.parse(resTotal));
