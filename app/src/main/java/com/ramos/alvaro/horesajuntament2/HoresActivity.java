@@ -30,6 +30,7 @@ public class HoresActivity extends AppCompatActivity {
     public static final String STATE_HORAMINUTS = "horaMinuts";
     public static final String STATE_TEMPS_SETMANAL = "tempsSetmanal";
     public static final String STATE_TEMPS_NOEFECT_VALIDACIO = "tempsPantallaCorrecte";
+    public static final String STATE_DIFERENCIA = "diferencia";
 
     String colorAplicado = Constantes.COLOR_ERROR;
 
@@ -74,6 +75,7 @@ public class HoresActivity extends AppCompatActivity {
         savedInstanceState.putString(STATE_HORAMINUTS, horaStringModificat);
         savedInstanceState.putString(STATE_TEMPS_SETMANAL, totalSemanaModificat);
         savedInstanceState.putBoolean(STATE_TEMPS_NOEFECT_VALIDACIO, tempsPantallaCorrecte);
+        savedInstanceState.putString(STATE_DIFERENCIA, tvDifTemps.getText().toString());
 
 
 
@@ -85,6 +87,7 @@ public class HoresActivity extends AppCompatActivity {
         horaStringModificat = recuperaEstado.getString(STATE_HORAMINUTS);
         totalSemanaModificat = recuperaEstado.getString(STATE_TEMPS_SETMANAL);
         tempsPantallaCorrecte= recuperaEstado.getBoolean(STATE_TEMPS_NOEFECT_VALIDACIO);
+        tvDifTemps.setText(recuperaEstado.getString(STATE_DIFERENCIA));
 
         ompleHoraMinuts(horaStringModificat);
         ompleTotalSetmana(totalSemanaModificat);
