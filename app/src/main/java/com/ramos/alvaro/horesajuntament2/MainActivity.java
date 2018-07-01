@@ -542,7 +542,8 @@ public class MainActivity extends AppCompatActivity {
 
             //recorremos la lista de valores de ese dia. Cada dia tiene 4 valores (entrada,salida, noEfect,efect)
             for (int j=0; j<4; j++) {
-                if (v.getId() == itemSel.getId()) {
+                TextView item = listaValoresDia.get(j);
+                if (v.getId() == item.getId()) {
                     tipusDada = j;
                     i = limitDies; // ponemos esto para salir del bucle principal
                     break;
@@ -611,8 +612,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(this, HoresActivity.class);
                 i.putExtra("horaStringOriginal", tvSelString);
                 i.putExtra("totalSemanaStringOriginal", totalSemana);
-                i.putExtra("entrada", listaValorsDia.get(Constantes.POS_ENTRADA).getText().toString());
-                i.putExtra("sortida", listaValorsDia.get(Constantes.POS_SORTIDA).getText().toString());
+                String val1=listaValorsDia.get(Constantes.POS_ENTRADA).getText().toString();
+                String val2= listaValorsDia.get(Constantes.POS_SORTIDA).getText().toString();
+                i.putExtra("entrada", val1);
+                i.putExtra("salida", val2);
                 i.putExtra("noEfect", listaValorsDia.get(Constantes.POS_TEMPS_NOEFEC).getText().toString());
                 i.putExtra("limitHorasSemana", limitHorasSem);
                 i.putExtra("tipus", tipus);

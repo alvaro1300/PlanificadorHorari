@@ -285,18 +285,20 @@ public class HoresActivity extends AppCompatActivity {
         String minString = tvMinuts.getText().toString();
         String horaString= tvHores.getText().toString();
 
-        int minResDia = Integer.parseInt(minString);
-        int horaResDia = Integer.parseInt(horaString);
+        int minPantalla = Integer.parseInt(minString);
+        int horaPantalla = Integer.parseInt(horaString);
 
         int dias=1;
         int horas=1;
         String minutes = "1";
 
-
-        Calendar entradaCal = Operacions.stringToCalendar(entrada, Constantes.TIME_FORMAT);
-        Calendar diferenciaEntreEntSort = Operacions.stringToCalendar(salida, Constantes.TIME_FORMAT);
+/*
+        Calendar entradaCal = Operacions.stringToCalendar(entrada, Constantes.HOUR_FORMAT);
+        Calendar diferenciaEntreEntSort = Operacions.stringToCalendar(tempsBaseString, Constantes.TIME_FORMAT2);
         diferenciaEntreEntSort.add(Calendar.MINUTE, -entradaCal.get(Calendar.MINUTE));
         diferenciaEntreEntSort.add(Calendar.HOUR_OF_DAY, -entradaCal.get(Calendar.HOUR_OF_DAY));
+*/
+        Calendar diferenciaEntreEntSort = null;
 
 
         if (tipus.equals(Constantes.TIPUS_ENTRADA)) {
@@ -307,6 +309,10 @@ public class HoresActivity extends AppCompatActivity {
             if (tempsHoraEntrada < tempsHoraSalida) {
                 tempsPantallaCorrecte = true;
                 btOk.setEnabled(true);
+                Calendar entradaCal = Operacions.stringToCalendar(tvHores.getText().toString() + ":" + tvMinuts.getText().toString(), Constantes.HOUR_FORMAT);
+                diferenciaEntreEntSort = Operacions.stringToCalendar(salida, Constantes.HOUR_FORMAT);
+                diferenciaEntreEntSort.add(Calendar.MINUTE, -entradaCal.get(Calendar.MINUTE));
+                diferenciaEntreEntSort.add(Calendar.HOUR_OF_DAY, -entradaCal.get(Calendar.HOUR_OF_DAY));
 
             } else {
                 tempsPantallaCorrecte = false;
@@ -323,6 +329,13 @@ public class HoresActivity extends AppCompatActivity {
             if (tempsHoraSalida > tempsHoraEntrada) {
                 tempsPantallaCorrecte = true;
                 btOk.setEnabled(true);
+                Calendar entradaCal = Operacions.stringToCalendar(entrada, Constantes.HOUR_FORMAT);
+                String pantalla = tvHores.getText().toString() + ":" + tvMinuts.getText().toString();
+                diferenciaEntreEntSort = Operacions.stringToCalendar(pantalla, Constantes.HOUR_FORMAT);
+                diferenciaEntreEntSort.add(Calendar.MINUTE, -entradaCal.get(Calendar.MINUTE));
+                diferenciaEntreEntSort.add(Calendar.HOUR_OF_DAY, -entradaCal.get(Calendar.HOUR_OF_DAY));
+
+
 
             } else {
                 tempsPantallaCorrecte = false;
@@ -333,9 +346,14 @@ public class HoresActivity extends AppCompatActivity {
 
         //Si la hora introducida es correcta, entonces hacemos los calculos
         if(tempsPantallaCorrecte) {
+
             tempsBase.add(Calendar.MINUTE, diferenciaEntreEntSort.get(Calendar.MINUTE));
             tempsBase.add(Calendar.HOUR_OF_DAY,diferenciaEntreEntSort.get(Calendar.HOUR_OF_DAY));
 
+            /*
+            tempsBase.add(Calendar.MINUTE, minPantalla);
+            tempsBase.add(Calendar.HOUR_OF_DAY,horaPantalla);
+*/
             dias = tempsBase.get(Calendar.DAY_OF_MONTH);
             horas = tempsBase.get(Calendar.HOUR_OF_DAY);
             minutes = Operacions.calendarToString(tempsBase, Constantes.MINUTE_FORMAT);
@@ -383,9 +401,11 @@ public class HoresActivity extends AppCompatActivity {
         String minutes = "1";
 
         //Encuentro la diferencia de tiempo en Calendar entre la hora de entrada y la hora de salida
-        Calendar entradaCal = Operacions.stringToCalendar(entrada, Constantes.TIME_FORMAT);
+        Calendar entradaCal = Operacions.stringToCalendar(entrada, Constantes.HOUR_FORMAT);
 
-        Calendar diferenciaEntreEntSort = Operacions.stringToCalendar(salida, Constantes.TIME_FORMAT);
+        Calendar diferenciaEntreEntSort = Operacions.stringToCalendar(salida, Constantes.HOUR_FORMAT);
+        int minut = entradaCal.get(Calendar.MINUTE);
+        int hor = entradaCal.get(Calendar.HOUR_OF_DAY);
         diferenciaEntreEntSort.add(Calendar.MINUTE, -entradaCal.get(Calendar.MINUTE));
         diferenciaEntreEntSort.add(Calendar.HOUR_OF_DAY, -entradaCal.get(Calendar.HOUR_OF_DAY));
 
@@ -513,6 +533,7 @@ public class HoresActivity extends AppCompatActivity {
     public void button3 (View v){
         String num = "3";
         accionButton(num);
+        calcularTot();
 
     }
 
